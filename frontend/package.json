@@ -1,0 +1,27 @@
+{
+  "name": "cashflowscore-frontend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "CashFlowScore - Real-time credit scoring dashboard for India's credit-invisible MSMEs (FINANCE · F2)",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "lucide-react": "^0.378.0",
+    "chart.js": "^4.4.2",
+    "react-chartjs-2": "^5.2.0",
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^2.3.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.2.1",
+    "vite": "^5.2.11",
+    "tailwindcss": "^3.4.3",
+    "postcss": "^8.4.38",
+    "autoprefixer": "^10.4.19"
+  }
+}

@@ -1,0 +1,46 @@
+[
+  {
+    "feature": "bounce_frequency",
+    "importance": 0.3465
+  },
+  {
+    "feature": "avg_monthly_balance",
+    "importance": 0.2284
+  },
+  {
+    "feature": "business_age_years",
+    "importance": 0.2177
+  },
+  {
+    "feature": "loan_default_history",
+    "importance": 0.0501
+  },
+  {
+    "feature": "income_stability",
+    "importance": 0.0499
+  },
+  {
+    "feature": "gst_filing_regularity",
+    "importance": 0.0278
+  },
+  {
+    "feature": "monthly_bank_volume",
+    "importance": 0.0231
+  },
+  {
+    "feature": "monthly_cash_volume",
+    "importance": 0.0182
+  },
+  {
+    "feature": "seasonality_score",
+    "importance": 0.0146
+  },
+  {
+    "feature": "monthly_upi_volume",
+    "importance": 0.0142
+  },
+  {
+    "feature": "gst_turnover",
+    "importance": 0.0095
+  }
+]
