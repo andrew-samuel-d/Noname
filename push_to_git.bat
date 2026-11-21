@@ -5,7 +5,7 @@ echo ========================================================
 echo  Pushing CashFlowScore to https://github.com/andrew-samuel-d/Noname
 echo ========================================================
 echo.
-git push -u origin main
+git push -u origin main --force
 echo.
 if %ERRORLEVEL% EQU 0 (
     echo ========================================================

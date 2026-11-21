@@ -3,6 +3,7 @@ from fastapi.responses import FileResponse, HTMLResponse
 from starlette.background import BackgroundTask
 
 from services.batch_scorer import score_excel
+from services.statement_analyzer import analyze_bank_statement
 from .scoring_service import score_business
 
 import json
@@ -189,6 +190,65 @@ def score(features: dict):
         raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Internal prediction error: {str(e)}")
+
+
+# =====================================================
+# BANK STATEMENT ANALYZER (BSA) EXTRACTION
+# =====================================================
+
+@app.post("/api/parse-statement")
+async def parse_statement(file: UploadFile = File(...)):
+    """
+    Parses an uploaded Bank Statement (PDF, CSV, or XLSX) using the
+    Bank Statement Analyzer (BSA) engine. Auto-extracts:
+    - Bounces & return charges
+    - Monthly UPI & Bank Transfer throughput
+    - Average Monthly Balance (AMB)
+    - Income Stability Index
+    """
+    input_path = None
+    try:
+        filename = (file.filename or "statement.pdf").replace("\\", "/").rsplit("/", 1)[-1]
+        ext = os.path.splitext(filename)[1].lower()
+        if ext not in {".pdf", ".csv", ".xlsx", ".xls", ".txt"}:
+            raise HTTPException(status_code=400, detail="Upload a .pdf, .csv, or .xlsx bank statement.")
+
+        content = await file.read()
+        if not content:
+            raise HTTPException(status_code=400, detail="Uploaded file is empty.")
+        if len(content) > 15 * 1024 * 1024:
+            raise HTTPException(status_code=413, detail="File size exceeds 15 MB limit.")
+
+        data_dir = get_data_dir()
+        os.makedirs(data_dir, exist_ok=True)
+        fd, input_path = tempfile.mkstemp(prefix="bsa_stmt_", suffix=ext, dir=data_dir)
+        os.close(fd)
+        with open(input_path, "wb") as f:
+            f.write(content)
+
+        analysis = analyze_bank_statement(input_path)
+        return analysis
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Statement extraction error: {str(e)}")
+    finally:
+        if input_path and os.path.exists(input_path):
+            try:
+                os.remove(input_path)
+            except OSError:
+                pass
+
+
+@app.get("/api/sample-statement/{name}")
+def get_sample_statement(name: str):
+    """Returns pre-parsed telemetry for demonstration sample statements."""
+    data_dir = get_data_dir()
+    safe_name = os.path.basename(name)
+    path = os.path.join(data_dir, safe_name)
+    if os.path.exists(path):
+        return analyze_bank_statement(path)
+    raise HTTPException(status_code=404, detail="Sample statement not found")
 
 
 # =====================================================

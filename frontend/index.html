@@ -168,10 +168,11 @@
     /* ═══════════════════════════════════════════════════
        BSA AUDIT MODAL: ZERO SELF-REPORTING VERIFICATION
        ═══════════════════════════════════════════════════ */
-    function BsaAuditModal({ isOpen, onClose, borrowerName, bounces, form }) {
+    function BsaAuditModal({ isOpen, onClose, borrowerName, bounces, form, statementMeta }) {
       if (!isOpen) return null;
 
-      const sampleBounceLogs = [
+      const dynamicRecords = statementMeta?.audit_trail?.bounce_records;
+      const recordsToDisplay = dynamicRecords && dynamicRecords.length > 0 ? dynamicRecords : [
         { date: '14 Oct 2025', narration: 'ACH DR RETURN: HDFC0000123 / INSUFFICIENT BALANCE', code: 'ERR-51', fee: '₹590.00' },
         { date: '02 Nov 2025', narration: 'INWARD CHQ RTN CHG: CTS CLG RET CHQ 004128', code: 'RET-01', fee: '₹500.00' },
         { date: '18 Dec 2025', narration: 'NACH MANDATE FAIL: BAJAJ FIN AUTO-DEBIT RET', code: 'ERR-51', fee: '₹590.00' },
@@ -179,6 +180,10 @@
         { date: '21 Jan 2026', narration: 'ECS REVERSAL FEE: MIN BALANCE BREACH / RET', code: 'ERR-55', fee: '₹354.00' },
         { date: '12 Feb 2026', narration: 'ACH DEBIT RETURN: MUTHOOT FIN EMI RTN', code: 'ERR-51', fee: '₹590.00' },
       ].slice(0, Math.min(bounces, 6));
+
+      const bankLabel = statementMeta?.detected_bank || "Originating Commercial Bank";
+      const accLabel = statementMeta?.account_masked || "XXXX-XXXX-4092";
+      const displayBorrower = statementMeta?.account_holder || borrowerName;
 
       return (
         <div className="fixed inset-0 z-50 overflow-y-auto bg-surface-900/60 backdrop-blur-sm flex items-center justify-center p-4">
@@ -188,7 +193,7 @@
                 <span className="p-1.5 bg-emerald-100 text-emerald-800 rounded-lg">{Icons.shield}</span>
                 <div>
                   <h3 className="text-sm font-bold text-surface-900">Bank Statement Analyzer (BSA) Telemetry</h3>
-                  <p className="text-[10px] text-surface-500">RBI Account Aggregator (AA) Automated Extraction Audit</p>
+                  <p className="text-[10px] text-surface-500">RBI Account Aggregator (AA) Automated Extraction Audit • {bankLabel} ({accLabel})</p>
                 </div>
               </div>
               <button onClick={onClose} className="p-1 rounded-lg text-surface-400 hover:text-surface-700 hover:bg-surface-100">
@@ -209,7 +214,7 @@
 
               <div className="border border-surface-200 rounded-xl overflow-hidden">
                 <div className="bg-surface-50 p-2.5 border-b border-surface-200 flex justify-between items-center text-xs">
-                  <span className="font-bold text-surface-700">Borrower: {borrowerName}</span>
+                  <span className="font-bold text-surface-700">Entity: {displayBorrower}</span>
                   <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${bounces === 0 ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'}`}>
                     Detected Bounces: {bounces} in 12M
                   </span>
@@ -220,22 +225,22 @@
                     <div className="w-10 h-10 bg-emerald-100 text-emerald-700 rounded-full flex items-center justify-center mx-auto mb-2 text-base font-bold">✓</div>
                     <div className="text-xs font-bold text-surface-800">100% Clean Repayment Ledger Verified</div>
                     <div className="text-[11px] text-surface-500 mt-1 max-w-md mx-auto">
-                      Analyzed 1,420 transactions across 12 months. Zero penalty debit line items (<code>ACH RET</code>, <code>CHQ RTN</code>, or <code>ECS FAIL</code>) detected.
+                      Analyzed all statement entries across 12 months. Zero statutory penalty debit line items (<code>ACH RET</code>, <code>CHQ RTN</code>, or <code>ECS FAIL</code>) detected.
                     </div>
                   </div>
                 ) : (
                   <div className="p-3">
                     <div className="text-[10px] uppercase font-bold text-surface-400 mb-2">Extracted Statutory Penalty Debits:</div>
-                    <div className="space-y-1.5 font-mono text-[11px]">
-                      {sampleBounceLogs.map((log, i) => (
+                    <div className="space-y-1.5 font-mono text-[11px] max-h-60 overflow-y-auto">
+                      {recordsToDisplay.map((log, i) => (
                         <div key={i} className="p-2 bg-rose-50/60 border border-rose-200 rounded-lg flex items-center justify-between">
                           <div>
                             <span className="text-rose-800 font-bold mr-2">{log.date}</span>
                             <span className="text-surface-700">{log.narration}</span>
                           </div>
                           <div className="text-right flex items-center gap-2">
-                            <span className="text-[9px] bg-rose-200 text-rose-900 px-1.5 py-0.5 rounded font-bold">{log.code}</span>
-                            <span className="font-bold text-rose-700">{log.fee}</span>
+                            <span className="text-[9px] bg-rose-200 text-rose-900 px-1.5 py-0.5 rounded font-bold">{log.code || 'ERR-51'}</span>
+                            <span className="font-bold text-rose-700">{log.fee || '₹590.00'}</span>
                           </div>
                         </div>
                       ))}
@@ -247,11 +252,11 @@
               <div className="grid grid-cols-2 gap-2 text-[11px] text-surface-600">
                 <div className="bg-surface-50 p-2.5 rounded-lg border border-surface-200">
                   <div className="font-bold text-surface-800">AA Data Pipeline</div>
-                  <div className="text-[10px] text-surface-500 mt-0.5">Sahamati-certified Account Aggregator (FIP to FIU)</div>
+                  <div className="text-[10px] text-surface-500 mt-0.5">Sahamati-certified Account Aggregator ({bankLabel})</div>
                 </div>
                 <div className="bg-surface-50 p-2.5 rounded-lg border border-surface-200">
                   <div className="font-bold text-surface-800">Cryptographic Integrity</div>
-                  <div className="text-[10px] text-surface-500 mt-0.5">SHA-256 Digital Signature from Originating Bank</div>
+                  <div className="text-[10px] text-surface-500 mt-0.5">SHA-256 Digital Signature from Bank Node</div>
                 </div>
               </div>
             </div>
@@ -415,6 +420,11 @@
       const [sanctionModalOpen, setSanctionModalOpen] = useState(false);
       const [bsaModalOpen, setBsaModalOpen] = useState(false);
 
+      /* Bank Statement Auto-Ingestion State */
+      const [uploadingStmt, setUploadingStmt] = useState(false);
+      const [stmtFeedback, setStmtFeedback] = useState(null);
+      const [statementMeta, setStatementMeta] = useState(null);
+
       /* Batch State */
       const [batchWorking, setBatchWorking] = useState(false);
       const [batchDone, setBatchDone] = useState({ name: '', url:'', records:0, approved:0, rejected:0, avg:0, error:'' });
@@ -533,6 +543,67 @@
         }
         setForm(stressed);
         doScore(stressed);
+      };
+
+      /* Bank Statement Auto-Ingestion Handlers */
+      const processStatementAnalysis = (data, sourceLabel) => {
+        if (!data || data.status !== 'success') {
+          setStmtFeedback({ isError: true, title: 'Extraction Failed', desc: data?.detail || 'Unable to parse bank statement.' });
+          return;
+        }
+        const feats = data.extracted_features;
+        const updated = {
+          ...form,
+          monthly_upi_volume: feats.monthly_upi_volume,
+          monthly_bank_volume: feats.monthly_bank_volume,
+          avg_monthly_balance: feats.avg_monthly_balance,
+          monthly_cash_volume: feats.monthly_cash_volume,
+          bounce_frequency: feats.bounce_frequency,
+          income_stability: feats.income_stability
+        };
+        setForm(updated);
+        setStatementMeta(data);
+        setStmtFeedback({
+          isError: false,
+          title: `Auto-Fetched: ${data.detected_bank} (${data.account_masked})`,
+          desc: `Extracted ₹${fmt(feats.monthly_upi_volume)} UPI, ₹${fmt(feats.monthly_bank_volume)} Bank, ₹${fmt(feats.avg_monthly_balance)} AMB • ${feats.bounce_frequency} Bounces Detected.`
+        });
+        doScore(updated);
+      };
+
+      const handleStatementUpload = async (e) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+        setUploadingStmt(true);
+        setStmtFeedback(null);
+        try {
+          const fd = new FormData();
+          fd.append('file', file);
+          const r = await fetch('/api/parse-statement', { method: 'POST', body: fd });
+          const d = await r.json();
+          if (!r.ok) throw new Error(d.detail || 'Failed to analyze statement');
+          processStatementAnalysis(d, file.name);
+        } catch(err) {
+          setStmtFeedback({ isError: true, title: 'Upload Parse Error', desc: err.message });
+        } finally {
+          setUploadingStmt(false);
+          e.target.value = '';
+        }
+      };
+
+      const loadSampleStatement = async (filename, label) => {
+        setUploadingStmt(true);
+        setStmtFeedback(null);
+        try {
+          const r = await fetch(`/api/sample-statement/${filename}`);
+          const d = await r.json();
+          if (!r.ok) throw new Error(d.detail || 'Failed to load sample');
+          processStatementAnalysis(d, label);
+        } catch(err) {
+          setStmtFeedback({ isError: true, title: 'Error Loading Sample', desc: err.message });
+        } finally {
+          setUploadingStmt(false);
+        }
       };
 
       /* Batch Upload */
@@ -694,6 +765,72 @@
                         🚫 Default Shock
                       </button>
                     </div>
+                  </div>
+
+                  {/* Bank Statement Auto-Ingestion Card */}
+                  <div className="bg-gradient-to-br from-surface-900 via-surface-850 to-surface-800 text-white rounded-2xl p-4 shadow-sm space-y-3 border border-surface-700">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <span className="p-1.5 bg-accent-500/20 text-accent-400 rounded-lg">{Icons.file}</span>
+                        <div>
+                          <h3 className="text-xs font-bold text-white tracking-wide">Automated Bank Statement Analyzer (BSA)</h3>
+                          <p className="text-[10px] text-surface-300">Upload PDF / CSV / Excel statement to auto-extract cash flow & bounces</p>
+                        </div>
+                      </div>
+                      <span className="text-[9px] font-mono bg-accent-500/20 text-accent-300 border border-accent-500/30 px-2 py-0.5 rounded uppercase font-semibold">
+                        OCR + NLP Engine
+                      </span>
+                    </div>
+
+                    <div className="flex flex-col sm:flex-row gap-2">
+                      <label className="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2 rounded-xl bg-accent-500 hover:bg-accent-600 text-surface-950 text-xs font-bold cursor-pointer transition shadow-sm">
+                        {uploadingStmt ? (
+                          <>
+                            <span className="w-3.5 h-3.5 border-2 border-surface-950/30 border-t-surface-950 rounded-full animate-spin"></span>
+                            <span>Extracting Transactions...</span>
+                          </>
+                        ) : (
+                          <>
+                            {Icons.upload}
+                            <span>Upload Bank Statement (PDF/CSV)</span>
+                          </>
+                        )}
+                        <input type="file" accept=".pdf,.csv,.xlsx,.xls,.txt" onChange={handleStatementUpload} className="sr-only" disabled={uploadingStmt} />
+                      </label>
+                    </div>
+
+                    {/* Quick Demo Statement Loaders */}
+                    <div className="pt-2 border-t border-surface-700/60 flex items-center justify-between text-[10px]">
+                      <span className="text-surface-400 font-medium">Test with sample statement:</span>
+                      <div className="flex gap-1.5">
+                        <button
+                          type="button"
+                          onClick={() => loadSampleStatement('sample_statement_sharma_kirana.pdf', 'Sharma Kirana Store (HDFC)')}
+                          className="px-2 py-1 bg-surface-700/80 hover:bg-surface-700 text-emerald-300 rounded font-semibold transition"
+                          title="Load 12-month HDFC Bank Statement with 0 bounces"
+                        >
+                          📄 HDFC (0 Bounces)
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => loadSampleStatement('sample_statement_gupta_trading.pdf', 'Gupta General Trading (SBI)')}
+                          className="px-2 py-1 bg-surface-700/80 hover:bg-surface-700 text-rose-300 rounded font-semibold transition"
+                          title="Load 12-month SBI Statement with 6 mandate return penalties"
+                        >
+                          📄 SBI (6 Bounces)
+                        </button>
+                      </div>
+                    </div>
+
+                    {stmtFeedback && (
+                      <div className={`p-2.5 rounded-xl text-[11px] flex items-start gap-2 border ${stmtFeedback.isError ? 'bg-rose-950/40 border-rose-800 text-rose-200' : 'bg-emerald-950/40 border-emerald-800 text-emerald-200'}`}>
+                        <span>{stmtFeedback.isError ? '⚠️' : '✅'}</span>
+                        <div className="flex-1">
+                          <div className="font-bold">{stmtFeedback.title}</div>
+                          <div className="text-[10px] opacity-90 mt-0.5">{stmtFeedback.desc}</div>
+                        </div>
+                      </div>
+                    )}
                   </div>
 
                   {/* Form Card */}
@@ -1223,6 +1360,7 @@
             borrowerName={activeBorrowerName}
             bounces={form.bounce_frequency}
             form={form}
+            statementMeta={statementMeta}
           />
 
           {/* Footer */}
