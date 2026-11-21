@@ -1,73 +1,68 @@
-# CashFlowScore · Judges' Handbook Master Defense
-## Track: FINANCE · F2 — Credit for the Credit-Invisible
+# F2 Judge Defense — Accurate Prototype Claims
 
-> **Confidential Evaluator Rubric Decoded:**
-> The judging criteria specifically divides submissions into three tiers:
-> - **Naive Tier:** Kaggle dataset + XGBoost + generic LLM reasons *(Red flag / Auto-rejection)*.
-> - **Engineer Tier:** UPI/GST alternative data + SHAP + Fairness audit across gender/region + Reject Inference + Account Aggregator consent flow.
-> - **Creative Tier (1st Place Winner):** Redesigns the loan product itself! Revenue-based daily repayments, starter loans that grow with repayments ("the loan collects data"), supplier network vouching, and an actionable coach for rejected applicants.
+## What this project demonstrates
 
----
+CashFlowScore is an MSME-focused prototype. Its XGBoost model is trained on synthetic approval-rule labels, not observed loan repayment. The project demonstrates local scoring, Excel/CSV batch scoring, SHAP explanations, synthetic cash-flow/GST-like data generation, a Fairlearn-compatible group-metric stress report, and illustrative loan-product scenarios.
 
-### The 3 Core Probe Questions & Your Verbatim Answers
+Do not describe the prototype as a live lender, production-ready credit model, RBI-certified service, or completed Fairness/Account Aggregator integration.
 
-#### Probe Question 1: *"Who does your model unfairly reject, and how do you know?"*
-* **The Evaluator's Trap:** Traditional credit models unfairly reject two key segments in India:
-  1. **Women-owned micro-enterprises** (the 35% SIDBI credit gap) due to lack of inherited property titles / physical collateral.
-  2. **Informal Kiranas & Artisans** earning under ₹40 Lakhs/year who are legally exempt from GST registration (penalizing them for lack of GST filings).
-* **Your Answer:**
-  > *"We ran a comprehensive algorithmic fairness audit using Fairlearn principles across gender and informal enterprise tiers.*
-  > 
-  > *1. **Women-Owned MSMEs:** Traditional bureau scoring produces a Disparate Impact Ratio (DIR) of 0.61 against women entrepreneurs. Our cash-flow model achieves a **Disparate Impact Ratio of 0.94** (far exceeding the 0.80 four-fifths regulatory threshold) with an Equal Opportunity difference of just **0.024**, because we underwrite daily UPI transaction velocity rather than land titles.*
-  >
-  > *2. **Zero-GST Micro-Enterprises:** We do not treat GST as a hard exclusionary gate. For enterprises under ₹40 Lakhs turnover, our pipeline dynamically swaps GST weight into **UPI QR settlement frequency and bank average monthly balance (AMB)**.*
-  >
-  > *3. **Reject Inference:** We know traditional models suffer from **sample selection bias** (they never observe how rejected borrowers would have repaid). We implemented a two-stage **Reject Inference parceling protocol** that assigns pseudo-outcomes to borderline rejected applicants, preventing our retraining pipeline from locking out unbanked cohorts."*
+## Tools and demo commands
 
----
+Generate synthetic business cash-flow and GST-like records:
 
-#### Probe Question 2: *"What happens to a borrower in a bad month?"*
-* **The Evaluator's Trap:** If you offer a rigid monthly EMI on the 5th of every month, seasonal kiranas, tailors, or rural repair shops will bounce during monsoons, agricultural planting seasons, or supply delays, ruining their credit profile.
-* **Your Answer:**
-  > *"We completely redesigned the loan product to decouple from rigid monthly EMIs.*
-  > 
-  > *1. **Revenue-Based Financing (Daily UPI Sweep):** Instead of a fixed ₹75,000 monthly debit, the loan is serviced via a **5% to 8% daily sweep of incoming UPI QR settlements** through UPI AutoPay / e-NACH.*
-  > 
-  > *2. **Dynamic Down-scaling:** In a bad month where merchant revenue drops by 40% (e.g. monsoon slowdown), the daily repayment **automatically contracts from ₹3,000/day to ₹1,800/day**. The merchant never experiences a technical default or bounce charge.*
-  > 
-  > *3. **Seasonality Buffer:** For businesses with high seasonality scores, we build in a **30-day principal repayment holiday**, extending tenure without compounding penalty interest."*
+```bash
+python scripts/generate_synthetic_alternative_data.py
+```
 
----
+Outputs are explicitly synthetic: one year of daily UPI/bank/cash flow estimates, monthly GST-like filing records, and separate synthetic audit-group attributes. They are not downloaded from an Account Aggregator, GSTN, or real merchants.
 
-#### Probe Question 3: *"Where would your data come from in production, with consent?"*
-* **The Evaluator's Trap:** Lenders cannot rely on customer self-reporting (fraud risk) or web scraping (RBI banned credential scraping).
-* **Your Answer:**
-  > *"100% of our data flows through regulated digital public infrastructure with explicit user consent:*
-  > 
-  > *1. **RBI Account Aggregator (AA) Framework:** We connect via **Finvu / Setu AA sandboxes** (Setu is based right here in Bengaluru!). The merchant receives an OTP on their mobile phone via the Sahamati protocol. Once approved, their bank (HDFC, SBI, ICICI) transmits a tamper-proof, SHA-256 digitally signed JSON payload.*
-  > 
-  > *2. **RBI Unified Lending Interface (ULI):** Announced by RBI Governor and expanding to 64+ live lenders, ULI provides plug-and-play access to state land records, the Udyam portal, and the GSTN network with single-window consent.*
-  > 
-  > *3. **Zero Scraping Guarantee:** We never ask for NetBanking passwords or PDF passwords. If the borrower denies consent, zero data is received."*
+Generate SHAP global and individual explanations for the saved model:
 
----
+```bash
+python scripts/explain.py
+```
 
-### The 4 Creative Tier Features (Why CashFlowScore Wins)
+The script writes `model/shap_global_importance.csv`, `model/shap_sample_explanation.csv`, and `model/shap_explanations.json`. Values are model-output attributions on the raw margin scale; they do not establish causation or repayment risk. Install project dependencies first; SHAP is included in `requirements.txt`.
 
-| Creative Feature | How It Works in CashFlowScore | Why Evaluators Love It |
-| :--- | :--- | :--- |
-| **1. Revenue-Based Repayment** | 5%–8% daily sweep from UPI QR settlements rather than fixed EMI. | Solves "What happens in a bad month?" |
-| **2. Starter Growth Ladder** | Tier 1: ₹25,000 Sachet Loan (30-day daily sweep) $\rightarrow$ Tier 2: ₹1,00,000 $\rightarrow$ Tier 3: ₹5,00,000. | *"The loan itself collects data"* and builds a credit record for invisible merchants. |
-| **3. Supplier Trade Vouching** | Anchor verification via FMCG distributors (Metro Cash & Carry, ITC, HUL). | Substitutes missing collateral with supply-chain trust. |
-| **4. Eligibility Rehabilitation Coach** | If declined, the system generates an actionable 60-day roadmap (e.g., zero bounces for 60 days + ₹30k AMB unlocks ₹1.5L). | Turns a dead-end rejection into a growth path. |
+Run the group fairness sensitivity report:
 
----
+```bash
+python scripts/fairness_stress_test.py
+```
 
-### Bengaluru & India Evidence Cheat Sheet
+The script uses Fairlearn `MetricFrame` when Fairlearn is installed and a transparent built-in metric fallback otherwise. It compares identical synthetic profiles under explicitly invented women-owned and rural cash-flow shifts. It reports selection rate, TPR, and FPR against the synthetic approval-rule labels. These are not real demographic results, repayment performance, or fairness certification. Protected attributes are not model inputs.
 
-* **₹30 Lakh Crore:** Estimated credit gap for Indian MSMEs (~24% of total demand: ₹64L Cr demand vs ₹34L Cr supply) — *Source: SIDBI*.
-* **35% Gap:** Credit deficit for women-owned MSMEs, significantly wider than male-owned enterprises — *Source: SIDBI*.
-* **Demand vs Supply Divergence:** In Q1 2025, MSME loan demand grew **+11%**, while credit supply plummeted **-11%** — *Source: Women Entrepreneurs Review*.
-* **4.77 Crore Consents:** Handled by Account Aggregators in FY25, with lending driving **65%** of all active consents — *Source: DT Next*.
-* **64 Live Lenders:** Connected to RBI's Unified Lending Interface (ULI) as of December 2025 — *Source: Business Standard*.
-* **Local Ecosystem:** Setu (India's leading AA API infrastructure) is headquartered in **Bengaluru**, making this integration directly relevant to local fintech evaluators.
+Other prototype checks:
+
+```bash
+python scripts/drift_monitor.py incoming.csv
+python scripts/reject_inference_sensitivity.py pilot_outcomes.csv
+```
+
+The first compares profiles to a synthetic reference distribution. The second varies assumed default rates among rejected applicants in a future consented pilot dataset; it does not infer or invent their actual outcomes.
+
+## Judge questions
+
+### Who could be unfairly rejected?
+
+“We do not yet have real, consented demographic attributes or mature repayment outcomes, so we cannot say who is unfairly rejected in practice. We use a synthetic proxy stress test to see how approval estimates move under disclosed cash-flow shifts. Before any pilot, we would audit selection and error rates across appropriately governed gender and region groups, examine affordability and terms, and investigate gaps.”
+
+### What happens in a bad month?
+
+“The current indicative loan terms are fixed monthly estimates. The Fairness tab also demonstrates a proposed sales-linked schedule that pauses collection on zero-sales days and protects a minimum daily cash floor, with a repayment cap. It is a simplified arithmetic simulation; it is not connected to payments and does not implement hardship operations or term extensions.”
+
+### Where would data come from, with consent?
+
+“The scoring dashboard uses generated profiles only. We added an optional Setu sandbox CLI that requests narrowly scoped consent, redirects the owner to Setu's approval journey, and fetches only after provider confirmation. It has not been run because our team still needs its Setu sandbox credentials. Finvu is not connected. GST data would require an authorized consented route; the generated GST-like records are only sample data.”
+
+### What about applicants rejected by the model?
+
+“Their repayment outcomes are unknown. We do not claim to perform reject inference. The sensitivity script shows how portfolio estimates change across assumed reject default rates, without treating any assumption as an observed outcome. A pilot needs careful outcome collection, review access, and small affordable starter facilities where appropriate.”
+
+## Claims to avoid
+
+- Do not quote fabricated disparate-impact ratios, equal-opportunity gaps, or regulatory thresholds as CashFlowScore results.
+- Do not claim pseudo-outcome parceling, reject inference, or real repayment prediction.
+- Do not claim the Setu sandbox client has been activated or that Setu production, Finvu, GSTN, SMS parsing, AutoPay, e-NACH, ULI, or a payment rail is connected.
+- Do not claim GST filing is mandatory for every small business; missing GST evidence should be treated as unavailable evidence and handled with alternatives.
+- Do not call SHAP values causal explanations.

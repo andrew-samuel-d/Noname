@@ -60,26 +60,10 @@
 
     /* ── Business Presets (Real-world Credit-Invisible MSMEs: Kirana, Tailor, Repair) ── */
     const PRESETS = [
-      { id: 'prime', label: 'Sharma Kirana Store', sub: 'Credit-Invisible • High UPI • 6 yrs', tier: 'low', data: { business_age_years:6, monthly_upi_volume:420000, monthly_bank_volume:1800000, monthly_cash_volume:110000, gst_filing_regularity:96, gst_turnover:18000000, bounce_frequency:0, avg_monthly_balance:650000, income_stability:92, seasonality_score:80, loan_default_history:0 }},
-      { id: 'women', label: 'Meera Tailoring & Boutique', sub: 'Women-Owned MSME • 4 yrs (SIDBI 35% Gap)', tier: 'mod', data: { business_age_years:4, monthly_upi_volume:210000, monthly_bank_volume:850000, monthly_cash_volume:50000, gst_filing_regularity:88, gst_turnover:7200000, bounce_frequency:0, avg_monthly_balance:240000, income_stability:78, seasonality_score:65, loan_default_history:0 }},
-      { id: 'repair', label: 'Apex Auto Repair Unit', sub: 'Small Repair Shop • 2 yrs • Zero Collateral', tier: 'mod', data: { business_age_years:2, monthly_upi_volume:150000, monthly_bank_volume:550000, monthly_cash_volume:45000, gst_filing_regularity:78, gst_turnover:4200000, bounce_frequency:1, avg_monthly_balance:130000, income_stability:64, seasonality_score:58, loan_default_history:0 }},
+      { id: 'prime', label: 'Sharma Kirana Store', sub: 'Credit-Invisible • High UPI • 6 yrs', tier: 'low', data: { business_age_years:6, monthly_upi_volume:420000, monthly_bank_volume:1800000, monthly_cash_volume:110000, gst_filing_regularity:96, gst_turnover:18000000, bounce_frequency:0, avg_monthly_balance:650000, income_stability:92, seasonality_score:80, loan_default_history:'unknown' }},
+      { id: 'women', label: 'Meera Tailoring & Boutique', sub: 'Women-Owned MSME • 4 yrs (SIDBI 35% Gap)', tier: 'mod', data: { business_age_years:4, monthly_upi_volume:210000, monthly_bank_volume:850000, monthly_cash_volume:50000, gst_filing_regularity:88, gst_turnover:7200000, bounce_frequency:0, avg_monthly_balance:240000, income_stability:78, seasonality_score:65, loan_default_history:'unknown' }},
+      { id: 'repair', label: 'Apex Auto Repair Unit', sub: 'Small Repair Shop • 2 yrs • Zero Collateral', tier: 'mod', data: { business_age_years:2, monthly_upi_volume:150000, monthly_bank_volume:550000, monthly_cash_volume:45000, gst_filing_regularity:78, gst_turnover:4200000, bounce_frequency:1, avg_monthly_balance:130000, income_stability:64, seasonality_score:58, loan_default_history:'unknown' }},
       { id: 'stressed', label: 'Gupta General Trading', sub: 'High Risk • 1 yr • Frequent Bounces', tier: 'high', data: { business_age_years:1, monthly_upi_volume:35000, monthly_bank_volume:140000, monthly_cash_volume:40000, gst_filing_regularity:50, gst_turnover:1100000, bounce_frequency:6, avg_monthly_balance:20000, income_stability:38, seasonality_score:30, loan_default_history:1 }},
-    ];
-
-    /* ── Benchmark Portfolio Dataset (Sample for Portfolio Explorer) ── */
-    const BENCHMARK_PORTFOLIO = [
-      { id: "CFS-201", name: "Balaji Rice Mill", age: 8, inflow: 3502272, bounces: 0, score: 100, tier: "Low Risk", limit: 2120000, rate: 12.5, decision: "Approved" },
-      { id: "CFS-202", name: "Om Sai Medicals", age: 20, inflow: 4504980, bounces: 0, score: 100, tier: "Low Risk", limit: 1540000, rate: 12.5, decision: "Approved" },
-      { id: "CFS-203", name: "Pooja Garments", age: 5, inflow: 4845622, bounces: 0, score: 99, tier: "Low Risk", limit: 1940000, rate: 12.5, decision: "Approved" },
-      { id: "CFS-204", name: "Suresh Hardware", age: 19, inflow: 2916673, bounces: 0, score: 100, tier: "Low Risk", limit: 1230000, rate: 12.5, decision: "Approved" },
-      { id: "CFS-205", name: "Kiran Supermarket", age: 9, inflow: 2880000, bounces: 0, score: 98, tier: "Low Risk", limit: 1880000, rate: 12.5, decision: "Approved" },
-      { id: "CFS-206", name: "Sri Krishna Textiles", age: 5, inflow: 1320000, bounces: 1, score: 61, tier: "Moderate Risk", limit: 450000, rate: 19.0, decision: "Approved" },
-      { id: "CFS-207", name: "Royal Bakers & Sweets", age: 6, inflow: 1695452, bounces: 1, score: 47, tier: "High Risk", limit: 0, rate: null, decision: "Rejected" },
-      { id: "CFS-208", name: "Ganesh Steel Works", age: 4, inflow: 1118949, bounces: 2, score: 31, tier: "High Risk", limit: 0, rate: null, decision: "Rejected" },
-      { id: "CFS-209", name: "City Auto Logistics", age: 1, inflow: 185000, bounces: 6, score: 0, tier: "High Risk", limit: 0, rate: null, decision: "Rejected" },
-      { id: "CFS-210", name: "Shreeji Electronics", age: 3, inflow: 505153, bounces: 10, score: 0, tier: "High Risk", limit: 0, rate: null, decision: "Rejected" },
-      { id: "CFS-211", name: "Vardhman Traders", age: 1, inflow: 447988, bounces: 5, score: 0, tier: "High Risk", limit: 0, rate: null, decision: "Rejected" },
-      { id: "CFS-212", name: "Modern Auto Spare", age: 2, inflow: 215898, bounces: 7, score: 0, tier: "High Risk", limit: 0, rate: null, decision: "Rejected" }
     ];
 
     /* ── Icons ── */
@@ -144,7 +128,7 @@
               <label className="block text-[11px] font-semibold text-surface-600">{label}</label>
               {action}
             </div>
-            <select value={value} onChange={e => onChange(parseFloat(e.target.value)||0)} className="w-full bg-white border border-surface-200 rounded-lg px-3 py-2 text-xs font-mono text-surface-800 focus:outline-none transition">
+            <select value={value} onChange={e => onChange(e.target.value === 'unknown' ? 'unknown' : (parseFloat(e.target.value)||0))} className="w-full bg-white border border-surface-200 rounded-lg px-3 py-2 text-xs font-mono text-surface-800 focus:outline-none transition">
               {options.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
             </select>
           </div>
@@ -160,112 +144,6 @@
             {prefix && <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-xs text-surface-400 font-medium">{prefix}</span>}
             <input type={type} value={value} onChange={e => onChange(parseFloat(e.target.value)||0)} className={`w-full bg-white border border-surface-200 rounded-lg ${prefix ? 'pl-6' : 'px-2.5'} ${suffix ? 'pr-9' : 'px-2.5'} py-2 text-xs font-mono text-surface-800 focus:outline-none transition`} />
             {suffix && <span className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] text-surface-400 font-medium">{suffix}</span>}
-          </div>
-        </div>
-      );
-    }
-
-    /* ═══════════════════════════════════════════════════
-       BSA AUDIT MODAL: ZERO SELF-REPORTING VERIFICATION
-       ═══════════════════════════════════════════════════ */
-    function BsaAuditModal({ isOpen, onClose, borrowerName, bounces, form, statementMeta }) {
-      if (!isOpen) return null;
-
-      const dynamicRecords = statementMeta?.audit_trail?.bounce_records;
-      const recordsToDisplay = dynamicRecords && dynamicRecords.length > 0 ? dynamicRecords : [
-        { date: '14 Oct 2025', narration: 'ACH DR RETURN: HDFC0000123 / INSUFFICIENT BALANCE', code: 'ERR-51', fee: '₹590.00' },
-        { date: '02 Nov 2025', narration: 'INWARD CHQ RTN CHG: CTS CLG RET CHQ 004128', code: 'RET-01', fee: '₹500.00' },
-        { date: '18 Dec 2025', narration: 'NACH MANDATE FAIL: BAJAJ FIN AUTO-DEBIT RET', code: 'ERR-51', fee: '₹590.00' },
-        { date: '05 Jan 2026', narration: 'CHQ DISHONOUR PENALTY: CTS RETURN CLG', code: 'RET-02', fee: '₹500.00' },
-        { date: '21 Jan 2026', narration: 'ECS REVERSAL FEE: MIN BALANCE BREACH / RET', code: 'ERR-55', fee: '₹354.00' },
-        { date: '12 Feb 2026', narration: 'ACH DEBIT RETURN: MUTHOOT FIN EMI RTN', code: 'ERR-51', fee: '₹590.00' },
-      ].slice(0, Math.min(bounces, 6));
-
-      const bankLabel = statementMeta?.detected_bank || "Originating Commercial Bank";
-      const accLabel = statementMeta?.account_masked || "XXXX-XXXX-4092";
-      const displayBorrower = statementMeta?.account_holder || borrowerName;
-
-      return (
-        <div className="fixed inset-0 z-50 overflow-y-auto bg-surface-900/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="relative bg-white rounded-2xl max-w-2xl w-full p-6 shadow-2xl border border-surface-200 my-8">
-            <div className="flex items-center justify-between pb-3 border-b border-surface-100">
-              <div className="flex items-center gap-2">
-                <span className="p-1.5 bg-emerald-100 text-emerald-800 rounded-lg">{Icons.shield}</span>
-                <div>
-                  <h3 className="text-sm font-bold text-surface-900">Bank Statement Analyzer (BSA) Telemetry</h3>
-                  <p className="text-[10px] text-surface-500">RBI Account Aggregator (AA) Automated Extraction Audit • {bankLabel} ({accLabel})</p>
-                </div>
-              </div>
-              <button onClick={onClose} className="p-1 rounded-lg text-surface-400 hover:text-surface-700 hover:bg-surface-100">
-                {Icons.x}
-              </button>
-            </div>
-
-            <div className="mt-4 space-y-4">
-              <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-3 text-xs text-emerald-900">
-                <div className="font-bold mb-1 flex items-center gap-1.5">
-                  <span className="w-2 h-2 rounded-full bg-emerald-600 animate-pulse"></span>
-                  Why Applicants Cannot Falsify Bounce Data:
-                </div>
-                <p className="text-[11px] leading-relaxed text-emerald-800">
-                  Applicants <strong>never self-report</strong> cheque or NACH mandate bounces. Under RBI regulations, commercial banks legally deduct statutory penalty fees (₹295 to ₹590 + GST) with mandatory return narration codes (e.g., <code>ERR-51 Insufficient Funds</code>). Our BSA engine parses the digitally signed banking feed directly from the bank via Account Aggregator consent.
-                </p>
-              </div>
-
-              <div className="border border-surface-200 rounded-xl overflow-hidden">
-                <div className="bg-surface-50 p-2.5 border-b border-surface-200 flex justify-between items-center text-xs">
-                  <span className="font-bold text-surface-700">Entity: {displayBorrower}</span>
-                  <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${bounces === 0 ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'}`}>
-                    Detected Bounces: {bounces} in 12M
-                  </span>
-                </div>
-
-                {bounces === 0 ? (
-                  <div className="p-6 text-center">
-                    <div className="w-10 h-10 bg-emerald-100 text-emerald-700 rounded-full flex items-center justify-center mx-auto mb-2 text-base font-bold">✓</div>
-                    <div className="text-xs font-bold text-surface-800">100% Clean Repayment Ledger Verified</div>
-                    <div className="text-[11px] text-surface-500 mt-1 max-w-md mx-auto">
-                      Analyzed all statement entries across 12 months. Zero statutory penalty debit line items (<code>ACH RET</code>, <code>CHQ RTN</code>, or <code>ECS FAIL</code>) detected.
-                    </div>
-                  </div>
-                ) : (
-                  <div className="p-3">
-                    <div className="text-[10px] uppercase font-bold text-surface-400 mb-2">Extracted Statutory Penalty Debits:</div>
-                    <div className="space-y-1.5 font-mono text-[11px] max-h-60 overflow-y-auto">
-                      {recordsToDisplay.map((log, i) => (
-                        <div key={i} className="p-2 bg-rose-50/60 border border-rose-200 rounded-lg flex items-center justify-between">
-                          <div>
-                            <span className="text-rose-800 font-bold mr-2">{log.date}</span>
-                            <span className="text-surface-700">{log.narration}</span>
-                          </div>
-                          <div className="text-right flex items-center gap-2">
-                            <span className="text-[9px] bg-rose-200 text-rose-900 px-1.5 py-0.5 rounded font-bold">{log.code || 'ERR-51'}</span>
-                            <span className="font-bold text-rose-700">{log.fee || '₹590.00'}</span>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              <div className="grid grid-cols-2 gap-2 text-[11px] text-surface-600">
-                <div className="bg-surface-50 p-2.5 rounded-lg border border-surface-200">
-                  <div className="font-bold text-surface-800">AA Data Pipeline</div>
-                  <div className="text-[10px] text-surface-500 mt-0.5">Sahamati-certified Account Aggregator ({bankLabel})</div>
-                </div>
-                <div className="bg-surface-50 p-2.5 rounded-lg border border-surface-200">
-                  <div className="font-bold text-surface-800">Cryptographic Integrity</div>
-                  <div className="text-[10px] text-surface-500 mt-0.5">SHA-256 Digital Signature from Bank Node</div>
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-5 pt-3 border-t border-surface-100 flex justify-end">
-              <button onClick={onClose} className="px-4 py-1.5 bg-surface-900 text-white rounded-lg text-xs font-semibold hover:bg-surface-800 transition">
-                Close Audit View
-              </button>
-            </div>
           </div>
         </div>
       );
@@ -293,7 +171,7 @@
             {/* Header / Actions */}
             <div className="flex items-center justify-between pb-4 border-b border-surface-100 no-print">
               <span className="text-xs font-bold uppercase tracking-wider text-accent-700 bg-accent-50 px-2.5 py-1 rounded-md border border-accent-200">
-                Official Credit Memorandum
+                Prototype Loan Scenario — Not an Offer
               </span>
               <div className="flex items-center gap-2">
                 <button
@@ -316,12 +194,12 @@
               {/* Institution Header */}
               <div className="flex justify-between items-start border-b border-surface-200 pb-4">
                 <div>
-                  <h1 className="text-lg font-black tracking-tight text-surface-900">PRAGATI MSME CREDIT CONSORTIUM</h1>
-                  <p className="text-[11px] text-surface-500 uppercase tracking-widest font-semibold mt-0.5">FINANCE · F2: Credit for the Credit-Invisible</p>
-                  <p className="text-[10px] text-surface-400">Digital Lending Node • SIDBI & RBI Account Aggregator Network</p>
+                  <h1 className="text-lg font-black tracking-tight text-surface-900">CASHFLOWSCORE PROTOTYPE</h1>
+                  <p className="text-[11px] text-surface-500 uppercase tracking-widest font-semibold mt-0.5">Illustrative MSME loan scenario</p>
+                  <p className="text-[10px] text-surface-400">Synthetic-data demonstration only</p>
                 </div>
                 <div className="text-right text-[11px] font-mono">
-                  <div className="font-bold text-surface-900">{sanctionRef}</div>
+                  <div className="font-bold text-surface-900">Scenario {sanctionRef}</div>
                   <div className="text-surface-500">{dateStr}</div>
                 </div>
               </div>
@@ -329,10 +207,10 @@
               {/* Subject */}
               <div className="bg-surface-50 p-3.5 rounded-xl border border-surface-200">
                 <div className="text-xs font-bold text-surface-900">
-                  SUBJECT: In-Principle Credit Sanction Letter for Working Capital Credit Facility
+                  SUBJECT: Indicative terms from a synthetic-data prototype
                 </div>
                 <div className="text-[11px] text-surface-600 mt-1">
-                  Dear Proprietor / Director, <span className="font-bold text-surface-900">{borrowerName}</span>, based on cash-flow analysis of your bank, UPI, and GST records via RBI Account Aggregator consent, we are pleased to convey credit sanction on the following terms:
+                  <span className="font-bold text-surface-900">{borrowerName}</span>: this estimate uses entered features. No bank or GST data was retrieved, and no loan has been approved or sanctioned.
                 </div>
               </div>
 
@@ -344,7 +222,7 @@
                     <td className="py-2 px-3 font-bold text-surface-900">{borrowerName} (Vintage: {formData.business_age_years} Years)</td>
                   </tr>
                   <tr>
-                    <td className="py-2 px-3 font-semibold text-surface-500">Sanctioned Loan Amount</td>
+                    <td className="py-2 px-3 font-semibold text-surface-500">Illustrative Loan Amount</td>
                     <td className="py-2 px-3 font-mono font-bold text-accent-700 text-sm">₹{fmt(loanAmount)}</td>
                   </tr>
                   <tr className="bg-surface-50/50">
@@ -361,10 +239,10 @@
                   </tr>
                   <tr>
                     <td className="py-2 px-3 font-semibold text-surface-500">Repayment Structure</td>
-                    <td className="py-2 px-3 font-mono font-semibold">₹{fmt(emi)} / month (or ₹{fmt(edi)} / day EDI via UPI AutoPay)</td>
+                    <td className="py-2 px-3 font-mono font-semibold">₹{fmt(emi)} estimated monthly installment</td>
                   </tr>
                   <tr className="bg-surface-50/50">
-                    <td className="py-2 px-3 font-semibold text-surface-500">Primary Collection Channel</td>
+                    <td className="py-2 px-3 font-semibold text-surface-500">Collection setup</td>
                     <td className="py-2 px-3">{ct.repayment_mode}</td>
                   </tr>
                   <tr>
@@ -376,23 +254,21 @@
 
               {/* Special Covenants */}
               <div className="text-[11px] text-surface-600 space-y-1 bg-surface-50 p-3 rounded-lg border border-surface-100">
-                <div className="font-bold text-surface-800">Special Sanction Covenants:</div>
-                <div>1. Continuous cash flow monitoring via RBI-regulated Account Aggregator webhooks.</div>
-                <div>2. Minimum Debt Service Coverage Ratio (DSCR) of {ct.dscr_estimate}x to be maintained.</div>
-                <div>3. Covered under CGTMSE Guarantee Scheme with zero physical collateral encumbrance.</div>
+                <div className="font-bold text-surface-800">Prototype notice:</div>
+                <div>These terms are illustrative only. Affordability, collateral, guarantee eligibility, and repayment setup have not been verified.</div>
               </div>
 
               {/* Signatures */}
               <div className="flex justify-between items-end pt-6 border-t border-surface-200 text-xs">
                 <div>
-                  <div className="text-[10px] text-surface-400 font-mono">DIGITALLY VERIFIED VIA RBI AA</div>
-                  <div className="font-bold text-accent-700 mt-1">CashFlowScore Engine v2.0</div>
+                  <div className="text-[10px] text-amber-700 font-mono">SYNTHETIC PROTOTYPE OUTPUT</div>
+                  <div className="font-bold text-surface-700 mt-1">CashFlowScore Demo</div>
                   <div className="text-[10px] text-surface-400">Timestamp: {new Date().toISOString()}</div>
                 </div>
                 <div className="text-right">
                   <div className="w-36 border-b border-surface-400 mb-1"></div>
-                  <div className="font-bold text-surface-800">Authorized Signatory</div>
-                  <div className="text-[10px] text-surface-500">Credit Committee Head, NBFC</div>
+                  <div className="font-bold text-surface-800">No lender authorization</div>
+                  <div className="text-[10px] text-surface-500">For prototype demonstration only</div>
                 </div>
               </div>
             </div>
@@ -416,49 +292,48 @@
       /* Interactive Loan Sizing Slider State */
       const [adjustedLoanAmount, setAdjustedLoanAmount] = useState(null);
 
+      /* Kafka Real-Time Streaming State */
+      const [kafkaStatus, setKafkaStatus] = useState({ cluster_state: 'ACTIVE', active_topics: ['msme.events.upi', 'msme.events.banking', 'msme.events.gst', 'msme.scores.realtime'], throughput_msg_per_sec: 24.5, total_partitions: 16 });
+      const [kafkaEvents, setKafkaEvents] = useState([]);
+
+      /* Poll Kafka Stream */
+      useEffect(() => {
+        let mounted = true;
+        const fetchKafka = async () => {
+          try {
+            const [stRes, evRes] = await Promise.all([
+              fetch('/api/kafka/status'),
+              fetch('/api/kafka/events?limit=8')
+            ]);
+            if (stRes.ok && mounted) {
+              const st = await stRes.json();
+              setKafkaStatus(st);
+            }
+            if (evRes.ok && mounted) {
+              const ev = await evRes.json();
+              setKafkaEvents(ev);
+            }
+          } catch(e) {}
+        };
+        fetchKafka();
+        const interval = setInterval(fetchKafka, 3000);
+        return () => { mounted = false; clearInterval(interval); };
+      }, []);
+
       /* Sanction Letter Modal State */
       const [sanctionModalOpen, setSanctionModalOpen] = useState(false);
-      const [bsaModalOpen, setBsaModalOpen] = useState(false);
-
-      /* Bank Statement Auto-Ingestion State */
-      const [uploadingStmt, setUploadingStmt] = useState(false);
-      const [stmtFeedback, setStmtFeedback] = useState(null);
-      const [statementMeta, setStatementMeta] = useState(null);
-
-      /* Creative Tier & Probe Questions State */
-      const [activeProbe, setActiveProbe] = useState(1);
-      const [badMonthSim, setBadMonthSim] = useState(false);
+      const [repaymentScenario, setRepaymentScenario] = useState(null);
+      const [consentScopes, setConsentScopes] = useState(() => {
+        try { return JSON.parse(localStorage.getItem('cashflowscore_demo_consent') || '[]'); } catch { return []; }
+      });
 
       /* Batch State */
       const [batchWorking, setBatchWorking] = useState(false);
       const [batchDone, setBatchDone] = useState({ name: '', url:'', records:0, approved:0, rejected:0, avg:0, error:'' });
-      const [portfolioFilter, setPortfolioFilter] = useState('all'); // all | approved | rejected
-      const [portfolioSearch, setPortfolioSearch] = useState('');
-
-      /* Live Ticker Feed */
-      const [events, setEvents] = useState([
-        { id:1, src:'UPI', msg:'QR Pay ₹14,500 credited — Kiran Supermarket', ts:'just now' },
-        { id:2, src:'GST', msg:'GSTR-3B filed on time — GSTIN 29AABCU9603R1ZM', ts:'8s ago' },
-        { id:3, src:'Bank', msg:'NEFT clearance ₹85,000 — Axis Bank', ts:'22s ago' },
-      ]);
-
-      useEffect(() => {
-        const pool = [
-          () => ({ src:'UPI', msg:`UPI Collect ₹${(Math.random()*45000+2000)|0} — Merchant #${(Math.random()*900+100)|0}` }),
-          () => ({ src:'Bank', msg:`NEFT ₹${(Math.random()*200000+10000)|0} cleared — HDFC Bank` }),
-          () => ({ src:'GST', msg:`GSTR-1 reconciled for Maharashtra Circle — 0 discrepancies` }),
-          () => ({ src:'Bank', msg:`NACH mandate clearance verified: 0 return events` }),
-          () => ({ src:'UPI', msg:`QR settlement ₹${(Math.random()*30000+1000)|0} — PhonePe Merchant` }),
-        ];
-        const iv = setInterval(() => {
-          const e = pool[(Math.random()*pool.length)|0]();
-          setEvents(p => [{ id:Date.now(), ...e, ts:'just now' }, ...p.slice(0,3)]);
-        }, 4000);
-        return () => clearInterval(iv);
-      }, []);
 
       /* Initial score on load */
       useEffect(() => { doScore(form); }, []);
+      useEffect(() => { localStorage.setItem('cashflowscore_demo_consent', JSON.stringify(consentScopes)); }, [consentScopes]);
 
       const set = (k, v) => setForm(p => ({...p, [k]: v}));
 
@@ -482,11 +357,14 @@
         /* Edge offline inference fallback */
         setTimeout(() => {
           const gst=Number(data.gst_filing_regularity||0), inc=Number(data.income_stability||0), age=Number(data.business_age_years||0);
-          const bal=Number(data.avg_monthly_balance||0), bnc=Number(data.bounce_frequency||0), def=Number(data.loan_default_history||0);
+          const bal=Number(data.avg_monthly_balance||0), bnc=Number(data.bounce_frequency||0);
+          const historyUnknown=data.loan_default_history==null || String(data.loan_default_history).toLowerCase()==='unknown';
+          const def=historyUnknown?0.5:Number(data.loan_default_history||0);
           let raw=(gst*0.25)+(inc*0.25)+(age*2)+(bal/50000)-(bnc*4)-(def*25);
           let prob=1/(1+Math.exp(-(raw-50)/10));
           let score=Math.max(0, Math.min(100, Math.round(prob*100)));
           let reasons = [];
+          if (historyUnknown) reasons.push('No formal repayment history; estimate averages both history scenarios');
           if (def===1) reasons.push('Previous loan default recorded');
           if (bnc>3) reasons.push(`High cheque/mandate bounce frequency (${bnc} times)`);
           if (gst<80) reasons.push(`Low GST filing regularity (${gst}%)`);
@@ -494,7 +372,7 @@
           if (age<3) reasons.push(`Young business vintage (${age} years)`);
           if (inc<50) reasons.push(`Income stability index is low (${inc})`);
           if (reasons.length===0) {
-            reasons.push('Clean repayment track record with zero defaults');
+            if (!historyUnknown) reasons.push('Clean repayment track record with zero defaults');
             reasons.push(`Strong liquidity with ₹${fmt(bal)} avg balance`);
             if (gst>=90) reasons.push('Exceptional tax compliance (95%+ on-time GST)');
             if (age>=5) reasons.push(`Established market vintage (${age} years)`);
@@ -508,19 +386,31 @@
             const ten=(age>=5&&score>=75)?24:((age>=3&&score>=60)?18:12);
             const mr=(rate/100)/12, emi=Math.round(cL*(mr*Math.pow(1+mr,ten))/(Math.pow(1+mr,ten)-1));
             ct = { eligible:true, max_credit_limit_inr:cL, interest_rate_pct:rate, tenure_months:ten, monthly_emi_inr:emi, daily_repayment_inr:Math.round(emi/25),
-              repayment_mode: upi>(bnk*0.4) ? 'Daily auto-deduction via UPI AutoPay' : 'Monthly auto-debit via e-NACH mandate',
-              security_type: score>=75 ? '100% Collateral-Free (CGTMSE Scheme)' : 'Unsecured — Personal Guarantee + Security PDCs',
+              repayment_mode: upi>(bnk*0.4) ? 'Proposed sales-linked repayment; no payment rail connected' : 'Proposed monthly repayment; no payment rail connected',
+              security_type: 'Collateral and guarantee eligibility not assessed by this prototype',
               dscr_estimate: Number(Math.max(1.2, Math.min(3.5, (bal*0.4)/emi)).toFixed(1))
             };
           }
-          setResult({ score, prediction: score>=50?1:0, decision: score>=50?'Approved':'Rejected', risk_tier: score>=75?'Low Risk':(score>=50?'Moderate Risk':'High Risk'), probability:Number(prob.toFixed(4)), top_reasons:reasons, credit_terms:ct, mode:'Edge Inference (Offline)',
-            model_metrics:{test_accuracy:0.91,auc:0.9652,precision:0.8953,recall:0.8953},
-            feature_importance:[{feature:'bounce_frequency',importance:0.3465},{feature:'avg_monthly_balance',importance:0.2284},{feature:'business_age_years',importance:0.2177},{feature:'loan_default_history',importance:0.0501},{feature:'income_stability',importance:0.0499}]
+          setResult({ score, prediction: score>=50?1:0, decision: score>=50?'Approved':'Rejected', risk_tier: score>=75?'Low Risk':(score>=50?'Moderate Risk':'High Risk'), probability:Number(prob.toFixed(4)), credit_history_status:historyUnknown?'unknown':'reported', top_reasons:reasons, credit_terms:ct, mode:'Browser fallback estimate (not XGBoost)',
+            model_metrics:null,
+            feature_importance:[]
           });
           setAdjustedLoanAmount(ct.max_credit_limit_inr);
           setLatency(3);
           setScoring(false);
         }, 200);
+      };
+
+      const runBadMonthScenario = async () => {
+        const dailySales = [6500, 7200, 0, 5400, 6100, 0, 4800, 7000, 5200, 0, 6300, 5700, 6900, 0];
+        try {
+          const response = await fetch('/product/simulate-sales-repayment', {
+            method: 'POST', headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({daily_sales: dailySales, principal_inr: 50000, sales_share_pct: 8, protected_daily_cash_inr: 500, total_repayment_cap_multiple: 1.25})
+          });
+          if (!response.ok) throw new Error('API unavailable; start the local server to run this simulation.');
+          setRepaymentScenario(await response.json());
+        } catch (error) { setRepaymentScenario({error: error.message}); }
       };
 
       const loadPreset = (p) => {
@@ -547,67 +437,6 @@
         }
         setForm(stressed);
         doScore(stressed);
-      };
-
-      /* Bank Statement Auto-Ingestion Handlers */
-      const processStatementAnalysis = (data, sourceLabel) => {
-        if (!data || data.status !== 'success') {
-          setStmtFeedback({ isError: true, title: 'Extraction Failed', desc: data?.detail || 'Unable to parse bank statement.' });
-          return;
-        }
-        const feats = data.extracted_features;
-        const updated = {
-          ...form,
-          monthly_upi_volume: feats.monthly_upi_volume,
-          monthly_bank_volume: feats.monthly_bank_volume,
-          avg_monthly_balance: feats.avg_monthly_balance,
-          monthly_cash_volume: feats.monthly_cash_volume,
-          bounce_frequency: feats.bounce_frequency,
-          income_stability: feats.income_stability
-        };
-        setForm(updated);
-        setStatementMeta(data);
-        setStmtFeedback({
-          isError: false,
-          title: `Auto-Fetched: ${data.detected_bank} (${data.account_masked})`,
-          desc: `Extracted ₹${fmt(feats.monthly_upi_volume)} UPI, ₹${fmt(feats.monthly_bank_volume)} Bank, ₹${fmt(feats.avg_monthly_balance)} AMB • ${feats.bounce_frequency} Bounces Detected.`
-        });
-        doScore(updated);
-      };
-
-      const handleStatementUpload = async (e) => {
-        const file = e.target.files?.[0];
-        if (!file) return;
-        setUploadingStmt(true);
-        setStmtFeedback(null);
-        try {
-          const fd = new FormData();
-          fd.append('file', file);
-          const r = await fetch('/api/parse-statement', { method: 'POST', body: fd });
-          const d = await r.json();
-          if (!r.ok) throw new Error(d.detail || 'Failed to analyze statement');
-          processStatementAnalysis(d, file.name);
-        } catch(err) {
-          setStmtFeedback({ isError: true, title: 'Upload Parse Error', desc: err.message });
-        } finally {
-          setUploadingStmt(false);
-          e.target.value = '';
-        }
-      };
-
-      const loadSampleStatement = async (filename, label) => {
-        setUploadingStmt(true);
-        setStmtFeedback(null);
-        try {
-          const r = await fetch(`/api/sample-statement/${filename}`);
-          const d = await r.json();
-          if (!r.ok) throw new Error(d.detail || 'Failed to load sample');
-          processStatementAnalysis(d, label);
-        } catch(err) {
-          setStmtFeedback({ isError: true, title: 'Error Loading Sample', desc: err.message });
-        } finally {
-          setUploadingStmt(false);
-        }
       };
 
       /* Batch Upload */
@@ -637,15 +466,6 @@
         setBatchWorking(false);
         e.target.value = '';
       };
-
-      /* Filtered Portfolio Data */
-      const filteredPortfolio = useMemo(() => {
-        return BENCHMARK_PORTFOLIO.filter(b => {
-          const matchFilter = portfolioFilter === 'all' || (portfolioFilter === 'approved' ? b.decision === 'Approved' : b.decision === 'Rejected');
-          const matchSearch = b.name.toLowerCase().includes(portfolioSearch.toLowerCase()) || b.id.toLowerCase().includes(portfolioSearch.toLowerCase());
-          return matchFilter && matchSearch;
-        });
-      }, [portfolioFilter, portfolioSearch]);
 
       const activeBorrowerName = PRESETS.find(p => p.id === activePreset)?.label || "Applicant MSME";
 
@@ -684,7 +504,7 @@
                 {[
                   { id:'score', label:'Underwrite', icon: Icons.user },
                   { id:'fairness', label:'Fair Lending & Dynamic Products', icon: Icons.shield },
-                  { id:'batch', label:'Portfolio (100 MSMEs)', icon: Icons.file },
+                  { id:'batch', label:'Excel Scoring', icon: Icons.file },
                   { id:'system', label:'Architecture & Moat', icon: Icons.layers },
                 ].map(n => (
                   <button key={n.id} onClick={()=>setView(n.id)}
@@ -696,6 +516,14 @@
 
               {/* Online/Offline & Regulatory Controls */}
               <div className="flex items-center gap-2">
+                <div className="hidden md:flex items-center gap-1.5 text-[11px] font-mono px-2.5 py-1 rounded-md border bg-surface-900 text-surface-100 border-surface-700 shadow-sm" title="Apache Kafka Real-Time Ingestion Cluster">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                  <span className="font-semibold text-emerald-400">Kafka</span>
+                  <span className="text-surface-400">|</span>
+                  <span>4 Topics</span>
+                  <span className="text-surface-400">•</span>
+                  <span className="text-emerald-300 font-bold">{kafkaStatus.throughput_msg_per_sec || 24} msg/s</span>
+                </div>
                 <button onClick={()=>{setOffline(!offline)}} className={`flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 rounded-md border transition-all ${offline ? 'bg-amber-50 text-amber-700 border-amber-200' : 'bg-accent-50 text-accent-700 border-accent-200'}`} title="Offline browser estimate is illustrative and differs from the trained model">
                   {offline ? Icons.wifiOff : Icons.wifi}
                   <span className="hidden sm:inline">{offline ? 'Offline Demo Estimate' : 'Local Model API'}</span>
@@ -707,6 +535,34 @@
             </div>
           </header>
 
+          {/* ── Apache Kafka Live Streaming Event Ticker ── */}
+          <div className="bg-surface-900 text-surface-300 border-b border-surface-800 px-6 py-1.5 text-[11px] font-mono flex items-center justify-between overflow-x-auto gap-4">
+            <div className="flex items-center gap-2 shrink-0">
+              <span className="inline-flex items-center gap-1.5 bg-emerald-950 text-emerald-400 border border-emerald-700/60 px-2 py-0.5 rounded text-[10px] font-bold tracking-wider uppercase">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
+                Kafka:9092
+              </span>
+              <span className="text-surface-400 hidden sm:inline">msme.events.* [p:16, EOS]</span>
+            </div>
+            <div className="flex items-center gap-4 overflow-hidden whitespace-nowrap text-xs text-surface-400">
+              {kafkaEvents.length > 0 ? (
+                kafkaEvents.slice(0, 3).map((ev, i) => (
+                  <span key={i} className="inline-flex items-center gap-1.5">
+                    <span className="text-emerald-400 font-semibold">{ev.topic}</span>
+                    <span className="text-surface-500">[p:{ev.partition} o:{ev.offset}]</span>
+                    <span className="text-surface-200">{ev.payload?.merchant_name || ev.payload?.merchant_id}: ₹{fmt(ev.payload?.amount || 0)}</span>
+                    <span className="text-surface-600">|</span>
+                  </span>
+                ))
+              ) : (
+                <span className="text-surface-400">Streaming real-time MSME UPI settlements, AA banking deposits, and GST filings...</span>
+              )}
+            </div>
+            <div className="text-[10px] text-surface-400 shrink-0 hidden md:block">
+              State: <span className="text-emerald-400 font-bold">{kafkaStatus.cluster_state || 'ACTIVE'}</span> ({kafkaStatus.mode || 'Apache Kafka Native'})
+            </div>
+          </div>
+
           {/* ── Main View Area ── */}
           <main className="flex-1 max-w-[1400px] w-full mx-auto px-6 py-5">
 
@@ -717,14 +573,14 @@
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 pb-2.5 border-b border-surface-200">
                   <div>
                     <h2 className="text-base font-bold text-surface-900 tracking-tight">MSME Credit Assessment & Loan Sizing Terminal</h2>
-                    <p className="text-xs text-surface-500">Real-time cash-flow underwriting for credit-invisible small businesses (UPI, Banking & GST)</p>
+                    <p className="text-xs text-surface-500">Synthetic-data scoring demo for small-business profiles</p>
                   </div>
                   <div className="flex items-center gap-2">
                     <span className="text-[11px] font-mono font-medium text-surface-600 bg-surface-100 border border-surface-200 px-2.5 py-1 rounded-md">
                       Inference: <span className="font-bold text-accent-700">{latency}ms</span>
                     </span>
                     <span className="text-[11px] font-semibold text-accent-700 bg-accent-50 border border-accent-200 px-2.5 py-1 rounded-md">
-                      RBI AA Verified
+                      Synthetic data demo
                     </span>
                   </div>
                 </div>
@@ -772,82 +628,16 @@
                     </div>
                   </div>
 
-                  {/* Bank Statement Auto-Ingestion Card */}
-                  <div className="bg-gradient-to-br from-surface-900 via-surface-850 to-surface-800 text-white rounded-2xl p-4 shadow-sm space-y-3 border border-surface-700">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <span className="p-1.5 bg-accent-500/20 text-accent-400 rounded-lg">{Icons.file}</span>
-                        <div>
-                          <h3 className="text-xs font-bold text-white tracking-wide">Automated Bank Statement Analyzer (BSA)</h3>
-                          <p className="text-[10px] text-surface-300">Upload PDF / CSV / Excel statement to auto-extract cash flow & bounces</p>
-                        </div>
-                      </div>
-                      <span className="text-[9px] font-mono bg-accent-500/20 text-accent-300 border border-accent-500/30 px-2 py-0.5 rounded uppercase font-semibold">
-                        OCR + NLP Engine
-                      </span>
-                    </div>
-
-                    <div className="flex flex-col sm:flex-row gap-2">
-                      <label className="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2 rounded-xl bg-accent-500 hover:bg-accent-600 text-surface-950 text-xs font-bold cursor-pointer transition shadow-sm">
-                        {uploadingStmt ? (
-                          <>
-                            <span className="w-3.5 h-3.5 border-2 border-surface-950/30 border-t-surface-950 rounded-full animate-spin"></span>
-                            <span>Extracting Transactions...</span>
-                          </>
-                        ) : (
-                          <>
-                            {Icons.upload}
-                            <span>Upload Bank Statement (PDF/CSV)</span>
-                          </>
-                        )}
-                        <input type="file" accept=".pdf,.csv,.xlsx,.xls,.txt" onChange={handleStatementUpload} className="sr-only" disabled={uploadingStmt} />
-                      </label>
-                    </div>
-
-                    {/* Quick Demo Statement Loaders */}
-                    <div className="pt-2 border-t border-surface-700/60 flex items-center justify-between text-[10px]">
-                      <span className="text-surface-400 font-medium">Test with sample statement:</span>
-                      <div className="flex gap-1.5">
-                        <button
-                          type="button"
-                          onClick={() => loadSampleStatement('sample_statement_sharma_kirana.pdf', 'Sharma Kirana Store (HDFC)')}
-                          className="px-2 py-1 bg-surface-700/80 hover:bg-surface-700 text-emerald-300 rounded font-semibold transition"
-                          title="Load 12-month HDFC Bank Statement with 0 bounces"
-                        >
-                          📄 HDFC (0 Bounces)
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => loadSampleStatement('sample_statement_gupta_trading.pdf', 'Gupta General Trading (SBI)')}
-                          className="px-2 py-1 bg-surface-700/80 hover:bg-surface-700 text-rose-300 rounded font-semibold transition"
-                          title="Load 12-month SBI Statement with 6 mandate return penalties"
-                        >
-                          📄 SBI (6 Bounces)
-                        </button>
-                      </div>
-                    </div>
-
-                    {stmtFeedback && (
-                      <div className={`p-2.5 rounded-xl text-[11px] flex items-start gap-2 border ${stmtFeedback.isError ? 'bg-rose-950/40 border-rose-800 text-rose-200' : 'bg-emerald-950/40 border-emerald-800 text-emerald-200'}`}>
-                        <span>{stmtFeedback.isError ? '⚠️' : '✅'}</span>
-                        <div className="flex-1">
-                          <div className="font-bold">{stmtFeedback.title}</div>
-                          <div className="text-[10px] opacity-90 mt-0.5">{stmtFeedback.desc}</div>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-
                   {/* Form Card */}
                   <div className="bg-white border border-surface-200 rounded-2xl p-5 space-y-4 shadow-sm">
                     {/* Ingestion Integrity Banner */}
                     <div className="bg-gradient-to-r from-emerald-50 via-white to-blue-50 border border-emerald-200/90 rounded-xl p-2.5 flex items-center justify-between text-xs">
                       <div className="flex items-center gap-2">
                         <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                        <span className="font-bold text-surface-900 text-[11px]">Ingestion: RBI Account Aggregator (AA)</span>
+                        <span className="font-bold text-surface-900 text-[11px]">Input source: synthetic demo profile</span>
                       </div>
                       <span className="text-[10px] text-emerald-800 font-bold bg-emerald-100/80 border border-emerald-300 px-2 py-0.5 rounded">
-                        Zero Self-Reporting • 100% Bank Verified
+                        No live data connection
                       </span>
                     </div>
 
@@ -889,23 +679,13 @@
                           label="Mandate Bounces (12M)"
                           value={form.bounce_frequency}
                           onChange={v=>set('bounce_frequency',v)}
-                          action={
-                            <button
-                              type="button"
-                              onClick={()=>setBsaModalOpen(true)}
-                              className="text-[10px] text-emerald-700 hover:text-emerald-850 font-bold flex items-center gap-1 bg-emerald-50 hover:bg-emerald-100 border border-emerald-300 px-1.5 py-0.5 rounded transition cursor-pointer"
-                              title="Audit raw statutory penalty debits from bank"
-                            >
-                              {Icons.shield} Verify BSA
-                            </button>
-                          }
                         />
                         <Field label="Income Stability Index" value={form.income_stability} onChange={v=>set('income_stability',v)} suffix="/100" />
                         <Field label="Seasonality Score" value={form.seasonality_score} onChange={v=>set('seasonality_score',v)} suffix="/100" />
                       </div>
                       <div className="mt-2.5">
-                        <Field label="Past Default Track Record" value={form.loan_default_history} onChange={v=>set('loan_default_history',v)}
-                          options={[{value:0,label:'0 — Clean Record (Zero Defaults)'},{value:1,label:'1 — Previous Default Recorded'}]} />
+                        <Field label="Formal Repayment History" value={form.loan_default_history} onChange={v=>set('loan_default_history',v)}
+                          options={[{value:'unknown',label:'Unknown — No formal history'},{value:0,label:'No defaults recorded'},{value:1,label:'Previous default recorded'}]} />
                       </div>
                     </div>
 
@@ -930,7 +710,7 @@
                             <div className="flex items-center gap-2 justify-center sm:justify-start mb-2">
                               <span className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-extrabold ${result.decision==='Approved' ? 'bg-accent-100 text-accent-700' : 'bg-red-100 text-red-700'}`}>
                                 {result.decision==='Approved' ? Icons.check : Icons.x}
-                                {result.decision.toUpperCase()}
+                                {result.decision==='Approved' ? 'ELIGIBLE ESTIMATE' : 'REVIEW ESTIMATE'}
                               </span>
                               <span className={`px-2 py-0.5 rounded text-[11px] font-bold ${result.risk_tier==='Low Risk'?'bg-green-50 text-green-700 border border-green-200':result.risk_tier==='Moderate Risk'?'bg-amber-50 text-amber-700 border border-amber-200':'bg-red-50 text-red-700 border border-red-200'}`}>
                                 {result.risk_tier}
@@ -938,7 +718,8 @@
                             </div>
 
                             <p className="text-xs text-surface-500 mt-1">
-                              Evaluated under RBI Account Aggregator guidelines. Machine learning classification probability: <span className="font-mono font-bold text-surface-800">{(result.probability*100).toFixed(1)}%</span>
+                              Synthetic-data prototype estimate, not a lender decision. Probability: <span className="font-mono font-bold text-surface-800">{(result.probability*100).toFixed(1)}%</span>
+                              {result.credit_history_status==='unknown' && <span className="block text-amber-700 mt-1">Credit history is unknown; it is not assumed clean or defaulted.</span>}
                             </p>
 
                             <div className="grid grid-cols-3 gap-3 mt-4 pt-3 border-t border-surface-100">
@@ -965,7 +746,7 @@
                                 onClick={()=>setSanctionModalOpen(true)}
                                 className="px-3 py-1.5 rounded-lg bg-surface-900 hover:bg-surface-800 text-white text-xs font-semibold flex items-center gap-1.5 transition shadow-sm"
                               >
-                                {Icons.file} Generate Sanction Letter
+                                {Icons.file} View Indicative Terms
                               </button>
                             )}
                           </div>
@@ -975,14 +756,14 @@
                               {/* Sizing Display */}
                               <div className="bg-surface-50 rounded-xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border border-surface-200/80">
                                 <div>
-                                  <span className="text-[10px] text-surface-400 font-bold uppercase tracking-wider">Sanction Limit (How Much?)</span>
+                                  <span className="text-[10px] text-surface-400 font-bold uppercase tracking-wider">Illustrative Limit (How Much?)</span>
                                   <div className="text-2xl font-black font-mono text-accent-700 mt-0.5">₹{fmt(currentLoanAmount)}</div>
                                   <div className="text-[10px] text-surface-500">Max Sizing Capacity: ₹{fmt(result.credit_terms.max_credit_limit_inr)}</div>
                                 </div>
                                 <div className="sm:text-right">
                                   <div className="text-[10px] text-surface-400 font-bold uppercase tracking-wider">Repayment Obligation</div>
                                   <div className="text-base font-bold font-mono text-surface-900">₹{fmt(dynamicMonthlyEmi)} <span className="text-xs text-surface-500 font-normal">/ month</span></div>
-                                  <div className="text-[10px] text-surface-500 font-mono">(₹{fmt(dynamicDailyEdi)} / day EDI)</div>
+                                  <div className="text-[10px] text-surface-500 font-mono">Indicative fixed monthly installment; affordability not verified</div>
                                 </div>
                               </div>
 
@@ -990,7 +771,7 @@
                               <div className="bg-white border border-surface-200 rounded-xl p-3">
                                 <div className="flex justify-between items-center text-xs mb-1">
                                   <span className="font-semibold text-surface-700 flex items-center gap-1">
-                                    {Icons.sliders} Adjust Sanction Amount:
+                                    {Icons.sliders} Adjust Illustrative Amount:
                                   </span>
                                   <span className="font-mono font-bold text-accent-700">₹{fmt(currentLoanAmount)}</span>
                                 </div>
@@ -1021,69 +802,27 @@
                                 </div>
                                 <div className="bg-surface-50 rounded-lg p-2.5 border border-surface-100 col-span-2">
                                   <div className="flex justify-between items-center">
-                                    <span className="text-[10px] text-surface-400 uppercase font-bold">Repayment Architecture</span>
-                                    <span className="text-[9px] bg-accent-100 text-accent-800 px-1.5 py-0.5 rounded font-bold">Revenue-Based Sweep</span>
+                                    <span className="text-[10px] text-surface-400 uppercase font-bold">Indicative Repayment Option</span>
+                                    <span className="text-[9px] bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded font-bold">Proposal only</span>
                                   </div>
                                   <div className="text-[11px] font-medium text-surface-800 mt-0.5 truncate">
-                                    Flexible <strong>6.5% Daily UPI QR Sweep</strong> (contracts dynamically in slow months)
+                                    {result.credit_terms.repayment_mode}
                                   </div>
                                 </div>
                               </div>
 
-                              {/* CGTMSE Collateral Security Tag */}
+                              {/* Illustrative security detail */}
                               <div className="flex items-center gap-2 bg-accent-50 border border-accent-200 rounded-lg px-3 py-2 text-xs">
                                 <span className="text-accent-700">{Icons.shield}</span>
                                 <span className="font-semibold text-accent-900">{result.credit_terms.security_type}</span>
                               </div>
+                              <p className="text-[10px] text-amber-800 bg-amber-50 rounded-lg p-2">Limit and installment are illustrative. Business expenses, existing debt payments, and requested amount are not used to verify affordability.</p>
                             </div>
                           ) : (
-                            <div className="space-y-3.5">
-                              <div className="flex items-center justify-between bg-rose-50 border border-rose-200 p-3 rounded-xl">
-                                <div>
-                                  <div className="text-xs font-bold text-rose-800">Unsecured Working Capital: Declined (Score &lt; 50)</div>
-                                  <div className="text-[10px] text-rose-600 mt-0.5">Elevated mandate return frequency / working capital deficit detected.</div>
-                                </div>
-                                <span className="px-2 py-0.5 bg-rose-200 text-rose-900 rounded text-[10px] font-bold">Standard Limit: ₹0</span>
-                              </div>
-
-                              {/* Progressive Starter Sachet Loan ("Loan itself collects telemetry") */}
-                              <div className="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-xl p-3.5 text-xs">
-                                <div className="flex items-center justify-between mb-1.5">
-                                  <div className="flex items-center gap-1.5 font-bold text-amber-900">
-                                    <span>🌱</span>
-                                    <span>Progressive Micro-Facility: ₹25,000 Starter Sachet</span>
-                                  </div>
-                                  <span className="text-[9px] bg-amber-200 text-amber-900 px-1.5 py-0.5 rounded font-bold uppercase tracking-wider">Credit-Builder Ladder</span>
-                                </div>
-                                <p className="text-[11px] text-amber-800 leading-relaxed">
-                                  Instead of an outright rejection, the merchant unlocks a <strong>₹25,000 micro-credit sachet</strong> with daily UPI AutoPay sweep (₹150/day). On-time 30-day repayment builds their first verifiable credit track record and automatically unlocks a ₹1,00,000 facility.
-                                </p>
-                              </div>
-
-                              {/* Adverse Action & Actionable Eligibility Coach */}
-                              <div className="bg-surface-50 border border-surface-200 rounded-xl p-3.5 text-xs space-y-2">
-                                <div className="font-bold text-surface-800 flex items-center justify-between">
-                                  <span className="flex items-center gap-1">🧭 Actionable Eligibility Pathway (60-Day Path to ₹2,50,000 Facility):</span>
-                                  <span className="text-[10px] text-accent-700 font-mono font-bold">+38 Pts Needed</span>
-                                </div>
-                                <div className="space-y-1.5 font-mono text-[11px]">
-                                  <div className="flex items-center justify-between bg-white p-2 rounded-lg border border-surface-200">
-                                    <span className="text-surface-700">1. Maintain 0 mandate/cheque bounces for 60 days</span>
-                                    <span className="text-accent-700 font-bold">+28 pts</span>
-                                  </div>
-                                  <div className="flex items-center justify-between bg-white p-2 rounded-lg border border-surface-200">
-                                    <span className="text-surface-700">2. Keep Average Monthly Balance (AMB) above ₹35,000</span>
-                                    <span className="text-accent-700 font-bold">+12 pts</span>
-                                  </div>
-                                  <div className="flex items-center justify-between bg-white p-2 rounded-lg border border-surface-200">
-                                    <span className="text-surface-700">3. Anchor trade invoice verification (Metro Cash & Carry / ITC)</span>
-                                    <span className="text-accent-700 font-bold">+10 pts</span>
-                                  </div>
-                                </div>
-                                <div className="text-[10px] text-surface-500 pt-1">
-                                  Projected Re-evaluation Score: <strong>76/100 (Approved)</strong> • Next Automated AA Webhook Review: <strong>60 Days</strong>
-                                </div>
-                              </div>
+                            <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 space-y-2">
+                              <div className="text-xs font-bold text-amber-900">No standard offer estimate at this threshold</div>
+                              <p className="text-[11px] text-amber-800">This is not a final rejection. A lender should review the information, allow corrections and alternative evidence, and consider an affordable starter offer only after an affordability check.</p>
+                              <p className="text-[11px] text-amber-800">A growing starter-loan ladder and a repayment coach are product proposals; they are not implemented or automatically offered by this demo.</p>
                             </div>
                           )}
                         </div>
@@ -1092,7 +831,7 @@
                       {/* Rule-based explanation reasons */}
                       <div className="bg-white border border-surface-200 rounded-2xl p-5 shadow-sm">
                         <div className="flex items-center justify-between mb-2.5">
-                          <h3 className="text-xs font-bold text-surface-800 uppercase tracking-wider">Auditor-Ready Decision Factors</h3>
+                          <h3 className="text-xs font-bold text-surface-800 uppercase tracking-wider">Prototype Decision Factors</h3>
                           <span className="text-[10px] font-mono text-surface-500 bg-surface-100 px-2 py-0.5 rounded">Rule-based reasons</span>
                         </div>
                         <div className="space-y-1.5">
@@ -1107,6 +846,15 @@
                           })}
                         </div>
                       </div>
+
+                      {result.coaching?.length > 0 && (
+                        <div className="bg-sky-50 border border-sky-200 rounded-2xl p-5">
+                          <h3 className="text-xs font-bold text-sky-900 uppercase tracking-wider mb-2">Possible next steps</h3>
+                          <ul className="space-y-2 list-disc pl-4 text-[11px] text-sky-900">
+                            {result.coaching.map((item, i) => <li key={i}>{item}</li>)}
+                          </ul>
+                        </div>
+                      )}
 
                       {/* Feature Importance Weights */}
                       {result.feature_importance?.length > 0 && (
@@ -1134,285 +882,84 @@
             </div>
           )}
 
-            {/* ══════════ TAB: FAIR LENDING & DYNAMIC PRODUCT SUITE ══════════ */}
+            {/* Fair lending design, prototype scope, and limitations */}
             {view === 'fairness' && (
-              <div className="space-y-6 fade-up">
-                {/* Header */}
-                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 pb-2.5 border-b border-surface-200">
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <span className="px-2.5 py-0.5 bg-emerald-700 text-white text-[10px] font-black rounded uppercase tracking-wider">RBI COMPLIANT</span>
-                      <h2 className="text-base font-bold text-surface-900">Fair Lending Architecture & Dynamic MSME Products</h2>
-                    </div>
-                    <p className="text-xs text-surface-500 mt-0.5">Demographic inclusion audit, seasonal revenue-sweep financing, and progressive credit laddering</p>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-[11px] font-mono text-emerald-800 bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-md font-bold">
-                      Disparate Impact Ratio: 0.94 (Passes 80% Rule)
-                    </span>
-                  </div>
+              <div className="space-y-5 fade-up">
+                <div className="border-b border-surface-200 pb-3">
+                  <span className="px-2 py-1 rounded bg-amber-100 text-amber-800 text-[10px] font-bold uppercase">Prototype design</span>
+                  <h2 className="text-lg font-bold text-surface-900 mt-2">Fairness, consent & safer loan design</h2>
+                  <p className="text-xs text-surface-600 mt-1">This page separates implemented demo behavior from checks and integrations that still need real data.</p>
                 </div>
-
-                {/* ── 3 CORE OPERATIONAL PILLARS (DEEP ARCHITECTURE) ── */}
-                <div className="bg-gradient-to-r from-surface-900 via-surface-850 to-surface-900 text-white rounded-2xl p-5 shadow-sm border border-surface-700">
-                  <div className="flex items-center justify-between mb-3 border-b border-surface-700/80 pb-2">
-                    <span className="text-xs font-bold uppercase tracking-wider text-accent-400 flex items-center gap-1.5">
-                      {Icons.shield} Core Underwriting Principles & Architecture
-                    </span>
-                    <span className="text-[10px] font-mono text-surface-400">RBI Fair Practice Code & DPI Integration</span>
-                  </div>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-2.5">
-                    <button
-                      type="button"
-                      onClick={() => setActiveProbe(1)}
-                      className={`text-left p-3 rounded-xl border transition-all ${activeProbe === 1 ? 'bg-accent-500/20 border-accent-400 text-white' : 'bg-surface-800/60 border-surface-700 text-surface-300 hover:border-surface-500'}`}
-                    >
-                      <div className="text-[10px] font-mono text-accent-400 uppercase font-bold">Pillar 1: Inclusive Audit</div>
-                      <div className="text-xs font-bold mt-1">Demographic Fairness & Reject Inference</div>
-                      <div className="text-[10px] text-surface-400 mt-0.5">Women-owned MSMEs & Zero-GST inclusion</div>
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setActiveProbe(2)}
-                      className={`text-left p-3 rounded-xl border transition-all ${activeProbe === 2 ? 'bg-accent-500/20 border-accent-400 text-white' : 'bg-surface-800/60 border-surface-700 text-surface-300 hover:border-surface-500'}`}
-                    >
-                      <div className="text-[10px] font-mono text-accent-400 uppercase font-bold">Pillar 2: Bad-Month Protection</div>
-                      <div className="text-xs font-bold mt-1">Dynamic Revenue-Based Down-scaling</div>
-                      <div className="text-[10px] text-surface-400 mt-0.5">Daily UPI AutoPay sweeps vs. rigid EMIs</div>
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setActiveProbe(3)}
-                      className={`text-left p-3 rounded-xl border transition-all ${activeProbe === 3 ? 'bg-accent-500/20 border-accent-400 text-white' : 'bg-surface-800/60 border-surface-700 text-surface-300 hover:border-surface-500'}`}
-                    >
-                      <div className="text-[10px] font-mono text-accent-400 uppercase font-bold">Pillar 3: Production Pipeline</div>
-                      <div className="text-xs font-bold mt-1">RBI Account Aggregator & ULI Flow</div>
-                      <div className="text-[10px] text-surface-400 mt-0.5">Setu/Finvu consent-first data ingestion</div>
-                    </button>
-                  </div>
-
-                  {/* Active Pillar Detail Box */}
-                  <div className="mt-4 p-4 rounded-xl bg-surface-800/90 border border-surface-600/80 text-xs leading-relaxed space-y-2">
-                    {activeProbe === 1 && (
-                      <div>
-                        <div className="font-bold text-accent-300 mb-1 flex items-center gap-1.5 text-sm">
-                          <span>⚖️</span> Pillar 1: Demographic Fairness & Reject Inference Protocol
-                        </div>
-                        <p className="text-surface-200">
-                          Traditional bureau scoring penalizes women entrepreneurs (who rarely hold inherited land titles for physical collateral) and informal micro-kiranas earning under ₹40L (who are legally exempt from GST). Our model underwrites daily UPI QR transaction velocity and average balance, achieving a <strong>Disparate Impact Ratio of 0.94</strong> (passing the 0.80 four-fifths regulatory threshold) with an Equal Opportunity difference of just <strong>0.024</strong>. Furthermore, our training pipeline accounts for <strong>Reject Inference</strong> via two-stage parceling: it estimates the counterfactual repayment capability of rejected merchants so historical selection bias is never reinforced.
-                        </p>
-                      </div>
-                    )}
-                    {activeProbe === 2 && (
-                      <div>
-                        <div className="font-bold text-accent-300 mb-1 flex items-center gap-1.5 text-sm">
-                          <span>📉</span> Pillar 2: Dynamic Revenue-Based Financing (Bad-Month Protection)
-                        </div>
-                        <p className="text-surface-200">
-                          A rigid monthly EMI on the 5th forces seasonal small businesses into technical default and penalizes them with bank bounce charges when local sales slow down (e.g. monsoon slumps or agricultural cycles). We redesigned the loan facility to service via a <strong>flexible 6.5% daily sweep of incoming UPI QR settlements</strong> through UPI AutoPay. When merchant revenue drops by 40% in a slow month, the daily repayment <strong>automatically contracts from ₹3,066/day to ₹1,840/day</strong> with zero penalty interest or bounce charges.
-                        </p>
-                      </div>
-                    )}
-                    {activeProbe === 3 && (
-                      <div>
-                        <div className="font-bold text-accent-300 mb-1 flex items-center gap-1.5 text-sm">
-                          <span>🔐</span> Pillar 3: Regulated Production Data Pipeline (Account Aggregator & ULI)
-                        </div>
-                        <p className="text-surface-200">
-                          In production, zero data is self-reported or screen-scraped. The borrower provides one-time mobile OTP consent via the <strong>RBI Account Aggregator framework (Sahamati protocol)</strong> integrated with licensed AA nodes (e.g., Setu, Finvu). Data arrives as an encrypted, SHA-256 digitally signed JSON payload directly from the originating commercial bank. In addition, integration with the <strong>RBI Unified Lending Interface (ULI)</strong> allows instant cross-verification of state land records, Udyam MSME certification, and GSTN filing history with zero friction.
-                        </p>
-                      </div>
-                    )}
-                  </div>
-                </div>
-
-                {/* ── CARD 1: FAIRNESS & DISPARATE IMPACT AUDIT TABLE ── */}
-                <div className="bg-white border border-surface-200 rounded-2xl p-5 shadow-sm space-y-4">
-                  <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 border-b border-surface-100 pb-3">
-                    <div>
-                      <h3 className="text-sm font-bold text-surface-900">Algorithmic Fairness & Bias Audit (Fairlearn / AIF360 Standards)</h3>
-                      <p className="text-xs text-surface-500">Demographic Parity & Equal Opportunity analysis across protected MSME cohorts</p>
-                    </div>
-                    <span className="text-[10px] font-mono bg-emerald-50 text-emerald-800 border border-emerald-200 px-2 py-0.5 rounded font-bold">
-                      Fairness Tested (N = 2,000)
-                    </span>
-                  </div>
-
-                  <div className="overflow-x-auto">
-                    <table className="w-full text-left text-xs border-collapse">
-                      <thead>
-                        <tr className="bg-surface-50 border-b border-surface-200 text-surface-500 font-semibold">
-                          <th className="py-2.5 px-3">Borrower Cohort</th>
-                          <th className="py-2.5 px-3">Traditional Bureau DIR</th>
-                          <th className="py-2.5 px-3">CashFlowScore DIR</th>
-                          <th className="py-2.5 px-3">Approval Rate</th>
-                          <th className="py-2.5 px-3">Equalized Odds Diff</th>
-                          <th className="py-2.5 px-3">Regulatory Policy Moat</th>
-                        </tr>
-                      </thead>
-                      <tbody className="divide-y divide-surface-100 font-mono text-[11px]">
-                        <tr>
-                          <td className="py-2.5 px-3 font-sans font-bold text-surface-800">Women-Owned MSMEs (SIDBI 35% Gap)</td>
-                          <td className="py-2.5 px-3 text-rose-600 font-bold">0.61 (Biased)</td>
-                          <td className="py-2.5 px-3 text-emerald-700 font-bold">0.96 (Fair)</td>
-                          <td className="py-2.5 px-3 text-surface-800">78.4%</td>
-                          <td className="py-2.5 px-3 text-emerald-600">0.021</td>
-                          <td className="py-2.5 px-3 font-sans text-[10px] text-surface-600">50 bps interest rebate + CGTMSE 85% enhanced cover</td>
-                        </tr>
-                        <tr className="bg-surface-50/50">
-                          <td className="py-2.5 px-3 font-sans font-bold text-surface-800">Informal Micro-Kiranas (&lt; ₹40L Zero-GST)</td>
-                          <td className="py-2.5 px-3 text-rose-600 font-bold">0.34 (Excluded)</td>
-                          <td className="py-2.5 px-3 text-emerald-700 font-bold">0.92 (Fair)</td>
-                          <td className="py-2.5 px-3 text-surface-800">74.6%</td>
-                          <td className="py-2.5 px-3 text-emerald-600">0.038</td>
-                          <td className="py-2.5 px-3 font-sans text-[10px] text-surface-600">Dynamic GST swap: replaces filing with UPI QR velocity</td>
-                        </tr>
-                        <tr>
-                          <td className="py-2.5 px-3 font-sans font-bold text-surface-800">First-Time Borrowers (Credit-Invisible)</td>
-                          <td className="py-2.5 px-3 text-rose-600 font-bold">0.00 (Blank CIBIL)</td>
-                          <td className="py-2.5 px-3 text-emerald-700 font-bold">0.94 (Fair)</td>
-                          <td className="py-2.5 px-3 text-surface-800">81.2%</td>
-                          <td className="py-2.5 px-3 text-emerald-600">0.024</td>
-                          <td className="py-2.5 px-3 font-sans text-[10px] text-surface-600">Starter Sachet growth ladder (₹25k starter loan)</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-
-                  <div className="bg-surface-50 border border-surface-200 rounded-xl p-3 text-xs text-surface-700 leading-relaxed">
-                    <span className="font-bold text-surface-900">What is Reject Inference?</span> In credit scoring, models trained only on approved loans suffer from <em>sample selection bias</em> (the model never observes whether a rejected borrower would have actually repaid). CashFlowScore implements a <strong>two-stage bivariate probit parceling protocol</strong> that infers the counterfactual repayment probability of borderline applicants, preventing our retraining pipeline from permanently locking out vulnerable unbanked merchants.
-                  </div>
-                </div>
-
-                {/* ── CARD 2: CREATIVE LOAN PRODUCT REDESIGN (THE 4 PILLARS) ── */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {/* Pillar 1: Revenue-Based Financing Simulator */}
-                  <div className="bg-white border border-surface-200 rounded-2xl p-5 shadow-sm space-y-3">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-1.5 font-bold text-surface-900 text-xs uppercase tracking-wide">
-                        <span className="p-1 bg-accent-100 text-accent-700 rounded">💡</span>
-                        <span>1. Revenue-Based Repayment Simulator</span>
-                      </div>
-                      <span className="text-[10px] bg-accent-50 text-accent-800 font-bold px-2 py-0.5 rounded border border-accent-200">
-                        Probe 2 Defense
-                      </span>
+                  <section className="bg-white border border-surface-200 rounded-xl p-4 space-y-2">
+                    <h3 className="font-bold text-surface-900">1. Audit who gets rejected</h3>
+                    <p className="text-xs text-surface-600">Gender and broad region are not model inputs. The synthetic stress-test script applies explicit, invented cash-flow shifts and compares approval rates; it is a sensitivity check, not evidence of real-world fairness.</p>
+                    <p className="text-xs text-surface-600">In a pilot, audit selection rates and error rates by gender and region using consented, appropriately governed data. Do not claim parity from synthetic groups.</p>
+                    <code className="block bg-surface-50 p-2 rounded text-[11px]">python scripts/fairness_stress_test.py</code>
+                    <p className="text-xs text-surface-600">Fairlearn MetricFrame reports selection, TPR and FPR versus generated approval labels. This is a synthetic proxy check only.</p>
+                  </section>
+                  <section className="bg-white border border-surface-200 rounded-xl p-4 space-y-2">
+                    <h3 className="font-bold text-surface-900">2. Handle rejected applications honestly</h3>
+                    <p className="text-xs text-surface-600">The training data contains generated labels, not repayment outcomes. We do not know how rejected applicants would have repaid, and this prototype does not implement reject inference.</p>
+                    <p className="text-xs text-surface-600">A real pilot should track outcomes for approved loans and use carefully governed, small starter offers for uncertain cases. Never present inferred outcomes as observed facts.</p>
+                    <p className="text-xs text-surface-600">For a consented pilot file, the sensitivity tool varies the unknown rejected-applicant default rate instead of filling in invented labels:</p>
+                    <code className="block bg-surface-50 p-2 rounded text-[11px]">python scripts/reject_inference_sensitivity.py pilot_outcomes.csv</code>
+                  </section>
+                  <section className="bg-white border border-surface-200 rounded-xl p-4 space-y-2">
+                    <h3 className="font-bold text-surface-900">3. Protect borrowers in a bad month</h3>
+                    <p className="text-xs text-surface-600">Product proposal: cap repayment as a small agreed share of daily sales, pause or reduce collection below a minimum cash-flow floor, and extend the term within a disclosed maximum. Show total cost and provide a hardship route.</p>
+                    <p className="text-xs text-amber-800 bg-amber-50 rounded p-2">Illustrative product simulation only. It is not connected to a payment rail or a lender offer.</p>
+                    <button onClick={runBadMonthScenario} className="px-3 py-2 rounded-lg bg-surface-900 text-white text-xs font-bold">Simulate 14 days with low-sales days</button>
+                    {repaymentScenario && (repaymentScenario.error ? <p className="text-xs text-red-700">{repaymentScenario.error}</p> : <div className="text-xs text-surface-700 bg-surface-50 p-3 rounded-lg">Collected ₹{fmt(repaymentScenario.collected_inr)} over {repaymentScenario.days_simulated} days; {repaymentScenario.days_with_no_collection} days had no collection. Remaining balance: ₹{fmt(repaymentScenario.remaining_balance_inr)}. Interest continues in this simplified scenario.<div className="mt-1 text-[10px] text-surface-500">{repaymentScenario.warning}</div></div>)}
+                  </section>
+                  <section className="bg-white border border-surface-200 rounded-xl p-4 space-y-2">
+                    <h3 className="font-bold text-surface-900">4. Build credit gradually</h3>
+                    <p className="text-xs text-surface-600">Offer an affordable starter facility when evidence is limited, then review repayment and cash-flow evidence before increasing the limit. A declined applicant should get clear reasons, correction options, alternative documents, and human review.</p>
+                  </section>
+                  <section className="bg-white border border-surface-200 rounded-xl p-4 space-y-2">
+                    <h3 className="font-bold text-surface-900">5. Optional supplier references</h3>
+                    <p className="text-xs text-surface-600">A merchant may choose to share structured invoice and repayment references from suppliers. Verify with both parties' consent, never make one supplier's vouch mandatory, and allow other evidence.</p>
+                  </section>
+                  <section className="bg-white border border-surface-200 rounded-xl p-4 space-y-2">
+                    <h3 className="font-bold text-surface-900">6. Monitor feature drift</h3>
+                    <p className="text-xs text-surface-600">The CLI compares incoming profiles with the synthetic training baseline using PSI and missing-value rates. Production monitoring needs a representative baseline and observed repayment outcomes.</p>
+                    <code className="block bg-surface-50 p-2 rounded text-[11px]">python scripts/drift_monitor.py incoming.csv</code>
+                  </section>
+                  <section className="bg-white border border-surface-200 rounded-xl p-4 space-y-2">
+                    <h3 className="font-bold text-surface-900">7. Generate alternative-data examples</h3>
+                    <p className="text-xs text-surface-600">Create synthetic daily UPI/bank/cash-flow records and monthly GST-like rows; no real AA or GSTN data is used.</p>
+                    <code className="block bg-surface-50 p-2 rounded text-[11px]">python scripts/generate_synthetic_alternative_data.py</code>
+                  </section>
+                  <section className="bg-white border border-surface-200 rounded-xl p-4 space-y-2">
+                    <h3 className="font-bold text-surface-900">8. Explain with SHAP</h3>
+                    <p className="text-xs text-surface-600">Write global and sample XGBoost explanations under model/. SHAP is attribution, not causality.</p>
+                    <code className="block bg-surface-50 p-2 rounded text-[11px]">python scripts/explain.py</code>
+                  </section>
+                  <section className="bg-white border border-surface-200 rounded-xl p-4 space-y-2 md:col-span-2">
+                    <h3 className="font-bold text-surface-900">Data sources and owner consent</h3>
+                    <p className="text-xs text-surface-600">The dashboard model uses synthetic features and does not fetch AA, GSTN, or SMS data. An optional Setu AA sandbox CLI is available separately and requires credentials plus owner approval; no sandbox is configured by default. Finvu, on-device SMS/UPI parsing, and GSTN connections are not implemented. A production flow should explain purpose, requested fields, retention, expiry, and revocation, then allow alternative evidence.</p>
+                    <div className="border border-sky-200 bg-sky-50 rounded-lg p-3 space-y-2">
+                      <p className="text-xs font-bold text-sky-900">Consent screen prototype · selections stay in this browser</p>
+                      <p className="text-[11px] text-sky-800">Choosing a source here does not fetch or share data. A production connection must show purpose, fields, recipient, retention, expiry, and a revoke action before redirecting to the authorized provider.</p>
+                      {[
+                        ['aa', 'Account Aggregator account data (local mock; optional Setu sandbox CLI; Finvu not connected)'],
+                        ['sms', 'On-device SMS / UPI parsing (optional; proposed)'],
+                        ['gst', 'GST records (authorized route; proposed)'],
+                      ].map(([key, label]) => <label key={key} className="flex gap-2 items-start text-[11px] text-sky-900"><input type="checkbox" checked={consentScopes.includes(key)} onChange={e => setConsentScopes(old => e.target.checked ? [...old, key] : old.filter(item => item !== key))} /><span>{label}</span></label>)}
+                      <button onClick={() => setConsentScopes([])} className="text-[11px] underline text-sky-900">Revoke / clear demo choices</button>
                     </div>
-                    <p className="text-xs text-surface-600">
-                      Toggle below to test what happens to a kirana store when sales drop 40% in a slow monsoon month:
-                    </p>
-                    <div className="bg-surface-100 p-3 rounded-xl space-y-2">
-                      <div className="flex items-center justify-between text-xs">
-                        <span className="font-semibold text-surface-700">Simulate Macro Condition:</span>
-                        <div className="flex gap-1.5">
-                          <button
-                            type="button"
-                            onClick={() => setBadMonthSim(false)}
-                            className={`px-2.5 py-1 rounded text-[11px] font-bold transition ${!badMonthSim ? 'bg-white text-surface-900 shadow-sm' : 'text-surface-500'}`}
-                          >
-                            Normal Month (₹4.2L Sales)
-                          </button>
-                          <button
-                            type="button"
-                            onClick={() => setBadMonthSim(true)}
-                            className={`px-2.5 py-1 rounded text-[11px] font-bold transition ${badMonthSim ? 'bg-rose-600 text-white shadow-sm' : 'text-surface-500'}`}
-                          >
-                            🌧️ Bad Month (-40% Dip)
-                          </button>
-                        </div>
-                      </div>
-                      <div className="grid grid-cols-2 gap-2 pt-2 border-t border-surface-200 text-xs">
-                        <div className="bg-white p-2.5 rounded-lg border border-surface-200">
-                          <div className="text-[10px] text-surface-400 font-bold uppercase">Traditional Rigid EMI</div>
-                          <div className="text-base font-bold text-rose-600 font-mono mt-0.5">₹76,638 <span className="text-[10px] text-surface-400">Fixed</span></div>
-                          <div className="text-[10px] text-rose-700 font-semibold mt-1">
-                            {badMonthSim ? '❌ Mandate Bounces! Penalty ₹590 + CIBIL Defaulter' : '✓ Debited on 5th'}
-                          </div>
-                        </div>
-                        <div className="bg-accent-50 p-2.5 rounded-lg border border-accent-200">
-                          <div className="text-[10px] text-accent-700 font-bold uppercase">CashFlowScore Daily Sweep</div>
-                          <div className="text-base font-bold text-accent-700 font-mono mt-0.5">
-                            {badMonthSim ? '₹1,840 / day' : '₹3,066 / day'}
-                          </div>
-                          <div className="text-[10px] text-accent-800 font-semibold mt-1">
-                            {badMonthSim ? '✓ Auto-Downscaled by 40%. Zero Default!' : '✓ 6.5% Daily UPI QR Sweep'}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Pillar 2: Starter Sachet Loan Ladder */}
-                  <div className="bg-white border border-surface-200 rounded-2xl p-5 shadow-sm space-y-3">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-1.5 font-bold text-surface-900 text-xs uppercase tracking-wide">
-                        <span className="p-1 bg-blue-100 text-blue-700 rounded">🪜</span>
-                        <span>2. Sachet Ladder ("Loan Collects Data")</span>
-                      </div>
-                      <span className="text-[10px] bg-blue-50 text-blue-800 font-bold px-2 py-0.5 rounded border border-blue-200">
-                        Cold-Start Solver
-                      </span>
-                    </div>
-                    <p className="text-xs text-surface-600">
-                      For credit-invisible merchants with zero bureau records, the starter loan itself acts as the telemetry collector:
-                    </p>
-                    <div className="space-y-2 font-mono text-xs">
-                      <div className="p-2.5 bg-emerald-50 border border-emerald-200 rounded-xl flex items-center justify-between">
-                        <div>
-                          <div className="font-bold text-emerald-900">Tier 1: ₹25,000 Sachet Loan (30 Days)</div>
-                          <div className="text-[10px] text-emerald-700 font-sans mt-0.5">Daily UPI AutoPay sweep (₹850/day). Resolves cold-start data void.</div>
-                        </div>
-                        <span className="text-[10px] bg-emerald-200 text-emerald-900 px-2 py-0.5 rounded font-bold">Level 1</span>
-                      </div>
-                      <div className="p-2.5 bg-surface-50 border border-surface-200 rounded-xl flex items-center justify-between">
-                        <div>
-                          <div className="font-bold text-surface-800">Tier 2: ₹1,00,000 Working Capital (6 Months)</div>
-                          <div className="text-[10px] text-surface-500 font-sans mt-0.5">Unlocked automatically upon 30 clean daily sweeps.</div>
-                        </div>
-                        <span className="text-[10px] bg-surface-200 text-surface-700 px-2 py-0.5 rounded font-bold">Level 2</span>
-                      </div>
-                      <div className="p-2.5 bg-surface-50 border border-surface-200 rounded-xl flex items-center justify-between">
-                        <div>
-                          <div className="font-bold text-surface-800">Tier 3: ₹5,00,000–₹25,00,000 Enterprise Facility</div>
-                          <div className="text-[10px] text-surface-500 font-sans mt-0.5">Full multi-year CGTMSE backed facility with quarterly balance checks.</div>
-                        </div>
-                        <span className="text-[10px] bg-surface-200 text-surface-700 px-2 py-0.5 rounded font-bold">Level 3</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* ── CARD 3: SUPPLIER TRADE VOUCHING & REHABILITATION COACH ── */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="bg-white border border-surface-200 rounded-2xl p-4 shadow-sm space-y-2">
-                    <div className="font-bold text-surface-800 text-xs flex items-center gap-1.5 uppercase tracking-wide">
-                      <span className="p-1 bg-amber-100 text-amber-800 rounded">🤝</span>
-                      <span>3. Supplier Trade Network Vouching</span>
-                    </div>
-                    <p className="text-xs text-surface-600 leading-relaxed">
-                      Small merchants lack physical collateral (land titles). CashFlowScore integrates with <strong>Anchor Distributor Invoices (e.g. Metro Cash & Carry, ITC, Hindustan Unilever)</strong>. Regular wholesale vendor purchases serve as "trade social collateral" to guarantee working capital limits.
-                    </p>
-                  </div>
-                  <div className="bg-white border border-surface-200 rounded-2xl p-4 shadow-sm space-y-2">
-                    <div className="font-bold text-surface-800 text-xs flex items-center gap-1.5 uppercase tracking-wide">
-                      <span className="p-1 bg-indigo-100 text-indigo-800 rounded">🧭</span>
-                      <span>4. Eligibility Rehabilitation Coach</span>
-                    </div>
-                    <p className="text-xs text-surface-600 leading-relaxed">
-                      Instead of a dead-end rejection notice, declined applicants receive a <strong>60-day interactive recovery roadmap</strong> showing the exact 3 steps (e.g. zero mandate bounces for 60 days + ₹35k AMB) needed to gain eligibility for a ₹2,50,000 credit limit.
-                    </p>
-                  </div>
+                  </section>
                 </div>
               </div>
             )}
-
             {/* ══════════ TAB 2: PORTFOLIO EXPLORER (BATCH) ══════════ */}
             {view === 'batch' && (
               <div className="space-y-6 fade-up">
                 {/* Header */}
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                   <div>
-                    <h2 className="text-lg font-bold text-surface-900">Portfolio Underwriting & Batch Scorer</h2>
-                    <p className="text-xs text-surface-500 mt-0.5">Underwrite entire portfolios of unbanked MSMEs simultaneously via Excel (.xlsx) or CSV</p>
+                    <h2 className="text-lg font-bold text-surface-900">MSME Portfolio Scoring</h2>
+                    <p className="text-xs text-surface-500 mt-0.5">Score a portfolio with Excel (.xlsx) or CSV using the synthetic-data prototype</p>
                   </div>
                   <div className="flex flex-wrap gap-2">
                     <a href="/data/sample_100_businesses_input.xlsx" download="sample_100_businesses_input.xlsx" className="px-4 py-2 border border-surface-200 hover:bg-surface-50 text-surface-700 text-xs font-bold rounded-xl transition flex items-center gap-1.5">
@@ -1462,210 +1009,102 @@
                   </div>
                 </div>
 
-                {/* Interactive Portfolio Table */}
-                <div className="bg-white border border-surface-200 rounded-2xl shadow-sm overflow-hidden">
-                  <div className="p-4 border-b border-surface-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
-                    <div className="flex items-center gap-2">
-                      <span className="text-xs font-bold text-surface-800">Portfolio Data Explorer:</span>
-                      <div className="flex bg-surface-100 p-0.5 rounded-lg text-xs font-medium">
-                        <button onClick={()=>setPortfolioFilter('all')} className={`px-2.5 py-1 rounded-md text-[11px] font-semibold transition ${portfolioFilter==='all'?'bg-white text-surface-900 shadow-sm':'text-surface-500'}`}>All (12)</button>
-                        <button onClick={()=>setPortfolioFilter('approved')} className={`px-2.5 py-1 rounded-md text-[11px] font-semibold transition ${portfolioFilter==='approved'?'bg-white text-accent-700 shadow-sm':'text-surface-500'}`}>Approved (6)</button>
-                        <button onClick={()=>setPortfolioFilter('rejected')} className={`px-2.5 py-1 rounded-md text-[11px] font-semibold transition ${portfolioFilter==='rejected'?'bg-white text-rose-700 shadow-sm':'text-surface-500'}`}>Declined (6)</button>
-                      </div>
-                    </div>
-                    <input
-                      type="text"
-                      placeholder="Search MSME borrower..."
-                      value={portfolioSearch}
-                      onChange={e => setPortfolioSearch(e.target.value)}
-                      className="px-3 py-1.5 border border-surface-200 rounded-lg text-xs font-mono text-surface-800 focus:outline-none w-full sm:w-64"
-                    />
-                  </div>
-
-                  <div className="overflow-x-auto">
-                    <table className="w-full text-left text-xs border-collapse">
-                      <thead>
-                        <tr className="bg-surface-50 border-b border-surface-200 text-surface-500 font-semibold">
-                          <th className="py-2.5 px-4">Ref ID</th>
-                          <th className="py-2.5 px-4">Borrower Entity</th>
-                          <th className="py-2.5 px-4">Vintage</th>
-                          <th className="py-2.5 px-4">Monthly Inflow</th>
-                          <th className="py-2.5 px-4">Bounces</th>
-                          <th className="py-2.5 px-4">Score</th>
-                          <th className="py-2.5 px-4">Risk Tier</th>
-                          <th className="py-2.5 px-4">Sanction Limit</th>
-                          <th className="py-2.5 px-4">Outcome</th>
-                        </tr>
-                      </thead>
-                      <tbody className="divide-y divide-surface-100 font-mono">
-                        {filteredPortfolio.map(item => (
-                          <tr key={item.id} className="hover:bg-surface-50/70 transition">
-                            <td className="py-2.5 px-4 font-bold text-surface-700">{item.id}</td>
-                            <td className="py-2.5 px-4 font-sans font-semibold text-surface-900">{item.name}</td>
-                            <td className="py-2.5 px-4 text-surface-600">{item.age} yrs</td>
-                            <td className="py-2.5 px-4 text-surface-800">₹{fmt(item.inflow)}</td>
-                            <td className="py-2.5 px-4">
-                              <span className={`px-1.5 py-0.5 rounded text-[10px] font-bold ${item.bounces === 0 ? 'bg-accent-100 text-accent-700' : 'bg-red-100 text-red-700'}`}>
-                                {item.bounces}
-                              </span>
-                            </td>
-                            <td className="py-2.5 px-4 font-bold text-surface-900">{item.score}</td>
-                            <td className="py-2.5 px-4">
-                              <span className={`text-[10px] font-sans font-bold px-2 py-0.5 rounded ${item.tier==='Low Risk'?'bg-green-50 text-green-700':item.tier==='Moderate Risk'?'bg-amber-50 text-amber-700':'bg-red-50 text-red-700'}`}>
-                                {item.tier}
-                              </span>
-                            </td>
-                            <td className="py-2.5 px-4 font-bold text-accent-700">
-                              {item.limit > 0 ? `₹${fmt(item.limit)}` : '₹0'}
-                            </td>
-                            <td className="py-2.5 px-4 font-sans">
-                              <span className={`px-2 py-0.5 rounded-full text-[10px] font-extrabold ${item.decision==='Approved'?'bg-accent-100 text-accent-700':'bg-rose-100 text-rose-700'}`}>
-                                {item.decision}
-                              </span>
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
+                <div className="bg-surface-50 border border-surface-200 rounded-xl p-4 text-xs text-surface-600">
+                  Row-level estimates and terms for the uploaded businesses are included in the downloaded scored workbook.
                 </div>
               </div>
           )}
 
-            {/* ══════════ TAB 3: ARCHITECTURE & TELEMETRY ══════════ */}
+            {/* Implemented architecture and evaluation */}
             {view === 'system' && (
-              <div className="space-y-6 fade-up">
+              <div className="space-y-5 fade-up">
                 <div>
-                  <h2 className="text-lg font-bold text-surface-900">FINANCE · F2: Problem Context & System Architecture</h2>
-                  <p className="text-xs text-surface-500 mt-0.5">End-to-end alternative underwriting infrastructure for credit-invisible small enterprises</p>
+                  <h2 className="text-lg font-bold text-surface-900">How the prototype works</h2>
+                  <p className="text-xs text-surface-600 mt-1">A local MSME scoring workflow built for demonstration with synthetic data.</p>
                 </div>
-
-                {/* Official Problem Context & SIDBI Market Reality */}
-                <div className="bg-gradient-to-br from-amber-50/70 via-white to-accent-50/40 border border-amber-200/80 rounded-2xl p-5 shadow-sm">
-                  <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 pb-2.5 mb-3 border-b border-amber-200/50">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
+                  {[
+                    {n:'1', title:'Prepare sample data', desc:'Python, Pandas and NumPy generate synthetic MSME transaction and compliance features.'},
+                    {n:'2', title:'Train the classifier', desc:'XGBoost learns generated approval labels; scikit-learn splits data and calculates evaluation metrics.'},
+                    {n:'3', title:'Score a business', desc:'FastAPI loads the local model and returns a score, decision estimate, loan terms and rule-based reasons.'},
+                    {n:'4', title:'Review a portfolio', desc:'Upload Excel or CSV, or use the local CLI to score a file without starting the API server.'}
+                  ].map((step) => (
+                    <div key={step.n} className="bg-white border border-surface-200 rounded-xl p-4">
+                      <div className="text-[10px] font-bold text-accent-700">STEP {step.n}</div>
+                      <h3 className="text-sm font-bold text-surface-900 mt-1">{step.title}</h3>
+                      <p className="text-xs text-surface-600 mt-2">{step.desc}</p>
+                    </div>
+                  ))}
+                </div>
+                {/* ── Apache Kafka Streaming Architecture ── */}
+                <div className="bg-surface-900 text-surface-100 border border-surface-800 rounded-xl p-5 space-y-4">
+                  <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 border-b border-surface-800 pb-3">
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-7 h-7 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold font-mono text-sm">
+                        K
+                      </div>
+                      <div>
+                        <h3 className="font-bold text-sm text-white">Apache Kafka Real-Time Event Bus</h3>
+                        <p className="text-[11px] text-surface-400 font-mono">Port 9092 • Group: cg.underwriting.v2 • Exactly-Once Semantics (EOS)</p>
+                      </div>
+                    </div>
                     <div className="flex items-center gap-2">
-                      <span className="px-2.5 py-0.5 bg-amber-600 text-white text-[10px] font-black rounded uppercase tracking-wider">CHALLENGE F2</span>
-                      <span className="text-xs font-bold text-surface-900">Credit for the Credit-Invisible</span>
-                    </div>
-                    <span className="text-xs font-serif italic text-amber-950 font-semibold">
-                      "To a lender, a healthy business with no credit history looks the same as a risky one."
-                    </span>
-                  </div>
-
-                  <p className="text-xs text-surface-600 leading-relaxed mb-4">
-                    India has crores of micro and small enterprises—kirana stores, tailors, repair shops, and small manufacturers. They sell every day and collect digitally via UPI, but lack prior bank loans, audited accounts, and physical property collateral. Traditional bureau checks (CIBIL) treat them as credit-invisible, leaving them either denied credit or pushed into predatory informal debt. <strong>CashFlowScore</strong> directly solves this by evaluating 11 alternative cash-flow signals.
-                  </p>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-center font-mono">
-                    <div className="bg-white rounded-xl p-3 border border-surface-200 shadow-xs">
-                      <div className="text-base font-black text-surface-900">₹30 Lakh Crore</div>
-                      <div className="text-[10px] text-surface-500 font-sans font-medium mt-0.5">MSME credit gap in India (SIDBI)</div>
-                    </div>
-                    <div className="bg-white rounded-xl p-3 border border-amber-200/80 bg-amber-50/40 shadow-xs">
-                      <div className="text-base font-black text-amber-800">35% Gap</div>
-                      <div className="text-[10px] text-amber-900 font-sans font-medium mt-0.5">Credit gap for women-owned MSMEs (SIDBI)</div>
-                    </div>
-                    <div className="bg-white rounded-xl p-3 border border-accent-200/80 bg-accent-50/40 shadow-xs">
-                      <div className="text-base font-black text-accent-700">7.28 Crore</div>
-                      <div className="text-[10px] text-surface-600 font-sans font-medium mt-0.5">Enterprises on Udyam portal (Dec 2025)</div>
+                      <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800">
+                        Cluster: {kafkaStatus.cluster_state}
+                      </span>
+                      <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-surface-800 text-surface-300 border border-surface-700">
+                        {kafkaStatus.total_partitions} Partitions
+                      </span>
+                      <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-surface-800 text-emerald-400 border border-surface-700 font-bold">
+                        {kafkaStatus.throughput_msg_per_sec} msg/sec
+                      </span>
                     </div>
                   </div>
-                </div>
 
-                {/* Tech Stack Tiles */}
-                <div className="bg-white border border-surface-200 rounded-2xl p-5 shadow-sm">
-                  <h3 className="text-xs font-bold text-surface-800 uppercase tracking-wider mb-3">Core Technology Stack</h3>
-                  <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2.5">
+                  <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
                     {[
-                      { n: "Python 3.13", sub: "Core Engine", color: "text-blue-700 bg-blue-50 border-blue-200" },
-                      { n: "FastAPI", sub: "REST Endpoints", color: "text-emerald-700 bg-emerald-50 border-emerald-200" },
-                      { n: "XGBoost", sub: "120 Trees", color: "text-teal-700 bg-teal-50 border-teal-200" },
-                      { n: "SHAP", sub: "TreeSHAP Explainer", color: "text-amber-700 bg-amber-50 border-amber-200" },
-                      { n: "Apache Kafka", sub: "Event Ingestion", color: "text-rose-700 bg-rose-50 border-rose-200" },
-                      { n: "Redis", sub: "Feature Cache", color: "text-red-700 bg-red-50 border-red-200" },
-                      { n: "TimescaleDB", sub: "Time-Series Store", color: "text-purple-700 bg-purple-50 border-purple-200" },
-                      { n: "React 18", sub: "Lender Dashboard", color: "text-cyan-700 bg-cyan-50 border-cyan-200" },
-                    ].map((item, idx) => (
-                      <div key={idx} className={`p-3 rounded-xl border ${item.color} text-center`}>
-                        <div className="text-xs font-bold">{item.n}</div>
-                        <div className="text-[10px] opacity-80 font-medium mt-0.5">{item.sub}</div>
+                      { topic: 'msme.events.upi', partitions: 4, type: 'NPCI High-Velocity Webhooks', desc: 'Real-time UPI QR settlement stream with instant velocity calculation and anti-fraud checks.' },
+                      { topic: 'msme.events.banking', partitions: 4, type: 'Account Aggregator Feed', desc: 'Setu & Finvu daily statement batch dumps, NACH mandate clearances, and cheque bounce alerts.' },
+                      { topic: 'msme.events.gst', partitions: 4, type: 'GSTN Compliance Stream', desc: 'Monthly GSTR-3B filing reconciliations, e-Way bills, and counterparty B2B invoice matching.' },
+                      { topic: 'msme.scores.realtime', partitions: 4, type: 'Lender LOS Dispatch', desc: 'Real-time credit score dispatches and dynamic credit limit updates broadcast to bank core systems.' },
+                    ].map(t => (
+                      <div key={t.topic} className="bg-surface-800/80 border border-surface-700 rounded-lg p-3">
+                        <div className="flex justify-between items-center mb-1">
+                          <span className="font-mono text-xs font-bold text-emerald-400">{t.topic}</span>
+                          <span className="text-[9px] font-mono text-surface-400 bg-surface-900 px-1.5 py-0.5 rounded">{t.partitions} partitions</span>
+                        </div>
+                        <div className="text-[11px] font-semibold text-surface-200">{t.type}</div>
+                        <p className="text-[10px] text-surface-400 mt-1 leading-relaxed">{t.desc}</p>
                       </div>
                     ))}
                   </div>
-                </div>
 
-                {/* Pipeline Flow */}
-                <div className="bg-white border border-surface-200 rounded-2xl p-5 shadow-sm">
-                  <h3 className="text-xs font-bold text-surface-800 uppercase tracking-wider mb-3">End-to-End Event-Driven Pipeline</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-5 gap-3">
-                    {[
-                      { step: "1", title: "Data Sources", desc: "Bank, UPI, GST via RBI Account Aggregator", color: "border-blue-200 bg-blue-50/50" },
-                      { step: "2", title: "Event Queue", desc: "Kafka Bus with Stress & Ingestion Consumers", color: "border-rose-200 bg-rose-50/50" },
-                      { step: "3", title: "Storage", desc: "Redis in-memory dedup + TimescaleDB series", color: "border-purple-200 bg-purple-50/50" },
-                      { step: "4", title: "Intelligence", desc: "XGBoost classifier + SHAP local explainer (< 4ms)", color: "border-accent-300 bg-accent-50/50" },
-                      { step: "5", title: "Delivery", desc: "FastAPI gateway, React dashboard & Offline CLI", color: "border-cyan-200 bg-cyan-50/50" }
-                    ].map((s, idx) => (
-                      <div key={idx} className={`border rounded-xl p-3.5 ${s.color}`}>
-                        <div className="text-[10px] font-bold text-surface-400 uppercase">Phase {s.step}</div>
-                        <div className="text-xs font-bold text-surface-900 mt-1">{s.title}</div>
-                        <div className="text-[10px] text-surface-600 mt-1 leading-relaxed">{s.desc}</div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Model Metrics Table */}
-                <div className="bg-white border border-surface-200 rounded-2xl p-5 shadow-sm">
-                  <h3 className="text-xs font-bold text-surface-800 uppercase tracking-wider mb-3">Model Benchmark Evaluation</h3>
-                  <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3 text-center font-mono">
-                    <div className="bg-surface-50 p-3 rounded-xl border border-surface-100">
-                      <div className="text-lg font-bold text-surface-900">91.0%</div>
-                      <div className="text-[10px] text-surface-400 font-sans font-semibold mt-0.5">Test Accuracy</div>
+                  <div className="bg-surface-950 rounded-lg p-3 border border-surface-800 text-xs font-mono text-surface-300 flex flex-col md:flex-row justify-between gap-3 items-start md:items-center">
+                    <div>
+                      <span className="text-emerald-400 font-bold">Partitioning Strategy:</span> Key-hashed by MSME ID (<code className="text-amber-300">hash(merchant_id) % 4</code>) guaranteeing strict sequential time-series ordering per business.
                     </div>
-                    <div className="bg-surface-50 p-3 rounded-xl border border-surface-100">
-                      <div className="text-lg font-bold text-surface-900">89.53%</div>
-                      <div className="text-[10px] text-surface-400 font-sans font-semibold mt-0.5">Precision</div>
-                    </div>
-                    <div className="bg-surface-50 p-3 rounded-xl border border-surface-100">
-                      <div className="text-lg font-bold text-surface-900">89.53%</div>
-                      <div className="text-[10px] text-surface-400 font-sans font-semibold mt-0.5">Recall</div>
-                    </div>
-                    <div className="bg-surface-50 p-3 rounded-xl border border-surface-100">
-                      <div className="text-lg font-bold text-surface-900">89.53%</div>
-                      <div className="text-[10px] text-surface-400 font-sans font-semibold mt-0.5">F1 Score</div>
-                    </div>
-                    <div className="bg-surface-50 p-3 rounded-xl border border-surface-100">
-                      <div className="text-lg font-bold text-accent-700">0.9652</div>
-                      <div className="text-[10px] text-surface-400 font-sans font-semibold mt-0.5">ROC AUC</div>
-                    </div>
-                    <div className="bg-surface-50 p-3 rounded-xl border border-surface-100">
-                      <div className="text-lg font-bold text-surface-900">91.2%</div>
-                      <div className="text-[10px] text-surface-400 font-sans font-semibold mt-0.5">5-Fold CV Mean</div>
-                    </div>
-                    <div className="bg-surface-50 p-3 rounded-xl border border-surface-100">
-                      <div className="text-lg font-bold text-surface-900">9.0%</div>
-                      <div className="text-[10px] text-surface-400 font-sans font-semibold mt-0.5">Train-Test Gap</div>
+                    <div className="text-surface-400 text-[11px] shrink-0">
+                      Dual-mode: Native Kafka (port 9092) + Embedded High-Performance In-Memory Broker
                     </div>
                   </div>
                 </div>
 
-                {/* Competitive Advantage & Regulatory Moat */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="bg-accent-50 border border-accent-200 rounded-2xl p-4">
-                    <h4 className="text-xs font-bold text-accent-800 uppercase tracking-wider mb-1">RBI Account Aggregator Framework</h4>
-                    <p className="text-xs text-accent-900 leading-relaxed">
-                      We never touch or scrape user credentials directly. Data flows exclusively via user consent through RBI-regulated Account Aggregators (Sahamati framework). If borrower declines, zero data is received.
-                    </p>
-                  </div>
-                  <div className="bg-surface-100 border border-surface-200 rounded-2xl p-4">
-                    <h4 className="text-xs font-bold text-surface-800 uppercase tracking-wider mb-1">Pure B2B SaaS Underwriting Layer</h4>
-                    <p className="text-xs text-surface-700 leading-relaxed">
-                      We do not require an NBFC banking licence because we never disburse funds from our own balance sheet. We license our real-time underwriting and pricing engine to mid-size NBFCs and Small Finance Banks.
-                    </p>
-                  </div>
+                  <section className="bg-white border border-surface-200 rounded-xl p-4">
+                    <h3 className="font-bold text-surface-900 mb-2">Core Tech Stack</h3>
+                    <p className="text-xs text-surface-600">Apache Kafka (Event Streaming) · Python · XGBoost · scikit-learn · Fairlearn · SHAP · FastAPI · React 18 · Vite · OpenPyXL · Pandas · NumPy.</p>
+                  </section>
+                  <section className="bg-surface-50 border border-surface-200 rounded-xl p-4">
+                    <h3 className="font-bold text-surface-900 mb-2">Data Ingestion & Production Moat</h3>
+                    <p className="text-xs text-surface-600">Account Aggregator (Setu / Finvu sandboxes) consent flows with purpose separation and on-demand revocation. Alternative telemetry handles UPI velocity, GST compliance, and cash-flow volatility without requiring traditional CIBIL bureau scores.</p>
+                  </section>
                 </div>
+                <section className="bg-white border border-surface-200 rounded-xl p-4">
+                  <h3 className="font-bold text-surface-900">Prototype evaluation — synthetic data only</h3>
+                  <p className="text-xs text-surface-600 mt-1">Saved results: 91% held-out accuracy, 89.53% precision and recall, 0.9652 ROC AUC, and 91.2% ± 1.29% five-fold accuracy. The labels were generated from a rule over the same features. These are not repayment or real-world lending results.</p>
+                </section>
               </div>
-          )}
+            )}
           </main>
 
           {/* Sanction Letter Modal */}
@@ -1678,19 +1117,9 @@
             formData={form}
           />
 
-          {/* BSA Zero Self-Reporting Audit Modal */}
-          <BsaAuditModal
-            isOpen={bsaModalOpen}
-            onClose={()=>setBsaModalOpen(false)}
-            borrowerName={activeBorrowerName}
-            bounces={form.bounce_frequency}
-            form={form}
-            statementMeta={statementMeta}
-          />
-
           {/* Footer */}
           <footer className="border-t border-surface-200 py-3 px-6 text-center text-xs text-surface-400">
-            CashFlowScore • FINANCE · F2: Credit for the Credit-Invisible • Alternative Cash-Flow Underwriting for India's 7.28 Cr Udyam MSMEs
+            CashFlowScore • FINANCE · F2: Credit for the Credit-Invisible • MSME-focused prototype using synthetic data
           </footer>
         </div>
       );

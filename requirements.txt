@@ -5,6 +5,7 @@ click==8.4.2
 cloudpickle==3.1.2
 et_xmlfile==2.0.0
 fastapi==0.141.1
+fairlearn==0.15.0
 h11==0.16.0
 idna==3.18
 joblib==1.5.3

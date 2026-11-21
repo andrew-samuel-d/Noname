@@ -4,6 +4,7 @@ from starlette.background import BackgroundTask
 
 from services.batch_scorer import score_excel
 from services.statement_analyzer import analyze_bank_statement
+from services.kafka_stream import kafka_manager
 from .scoring_service import score_business
 
 import json
@@ -192,6 +193,22 @@ def score(features: dict):
         raise HTTPException(status_code=500, detail=f"Internal prediction error: {str(e)}")
 
 
+@app.post("/product/simulate-sales-repayment")
+def simulate_sales_repayment(payload: dict):
+    """Run a clearly labeled, non-binding sales-linked repayment scenario."""
+    try:
+        return simulate_sales_linked_repayment(
+            daily_sales=payload.get("daily_sales", []),
+            principal_inr=payload.get("principal_inr", 0),
+            monthly_rate_pct=payload.get("monthly_rate_pct", 1.25),
+            sales_share_pct=payload.get("sales_share_pct", 8),
+            protected_daily_cash_inr=payload.get("protected_daily_cash_inr", 500),
+            total_repayment_cap_multiple=payload.get("total_repayment_cap_multiple", 1.25),
+        )
+    except (TypeError, ValueError) as exc:
+        raise HTTPException(status_code=422, detail=str(exc))
+
+
 # =====================================================
 # BANK STATEMENT ANALYZER (BSA) EXTRACTION
 # =====================================================
@@ -249,6 +266,30 @@ def get_sample_statement(name: str):
     if os.path.exists(path):
         return analyze_bank_statement(path)
     raise HTTPException(status_code=404, detail="Sample statement not found")
+
+
+# =====================================================
+# APACHE KAFKA EVENT STREAMING
+# =====================================================
+
+@app.get("/api/kafka/status")
+def kafka_status():
+    """Returns Kafka cluster health, active topics, partitions, and message throughput."""
+    return kafka_manager.get_cluster_status()
+
+
+@app.get("/api/kafka/events")
+def kafka_events(topic: str = None, limit: int = 15):
+    """Consumes the latest streaming events across Kafka partitions."""
+    return kafka_manager.get_latest_events(topic=topic, limit=limit)
+
+
+@app.post("/api/kafka/publish")
+def kafka_publish(event: dict):
+    """Publishes a new MSME telemetry event to a Kafka topic."""
+    topic = event.get("topic", "msme.events.upi")
+    payload = event.get("payload", event)
+    return kafka_manager.publish(topic, payload)
 
 
 # =====================================================

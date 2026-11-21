@@ -47,6 +47,11 @@ def _read_input(input_file: str) -> pd.DataFrame:
 def _validate_features(row: pd.Series, row_number: int) -> dict:
     cleaned = {}
     for name in FEATURE_ORDER:
+        if name == "loan_default_history" and (
+            row[name] is None or pd.isna(row[name]) or str(row[name]).strip().lower() in {"", "unknown", "na", "n/a"}
+        ):
+            cleaned[name] = None
+            continue
         value = pd.to_numeric(row[name], errors="coerce")
         if pd.isna(value):
             raise ValueError(f"Row {row_number}: '{name}' is blank or not numeric.")

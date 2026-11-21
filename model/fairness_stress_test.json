@@ -1,0 +1,68 @@
+{
+  "status": "synthetic_counterfactual_sensitivity_not_fairness_certification",
+  "package": "Fairlearn MetricFrame when installed; transparent built-in fallback otherwise",
+  "n_base_businesses": 1000,
+  "model_input_features": [
+    "business_age_years",
+    "monthly_upi_volume",
+    "monthly_bank_volume",
+    "monthly_cash_volume",
+    "gst_filing_regularity",
+    "gst_turnover",
+    "bounce_frequency",
+    "avg_monthly_balance",
+    "income_stability",
+    "seasonality_score",
+    "loan_default_history"
+  ],
+  "protected_attributes_used_as_model_inputs": [],
+  "reference_label": "score_label is a generated approval-rule label, not a repayment outcome",
+  "metrics": {
+    "women_owned_proxy": {
+      "library": "built-in fallback (install fairlearn for MetricFrame)",
+      "by_group": {
+        "reference scenario": {
+          "selection_rate": 0.431,
+          "true_positive_rate": 0.9791183294663574,
+          "false_positive_rate": 0.015817223198594025,
+          "n": 1000
+        },
+        "women-owned proxy": {
+          "selection_rate": 0.414,
+          "true_positive_rate": 0.9466357308584686,
+          "false_positive_rate": 0.01054481546572935,
+          "n": 1000
+        }
+      },
+      "selection_rate_gap_percentage_points": -1.7,
+      "group_labels_are_real_demographics": false,
+      "invented_group_assumptions": "Same businesses with assumed 15% lower balance and UPI, 10% lower bank volume; not observed gender data."
+    },
+    "rural_proxy": {
+      "library": "built-in fallback (install fairlearn for MetricFrame)",
+      "by_group": {
+        "reference scenario": {
+          "selection_rate": 0.431,
+          "true_positive_rate": 0.9791183294663574,
+          "false_positive_rate": 0.015817223198594025,
+          "n": 1000
+        },
+        "rural proxy": {
+          "selection_rate": 0.417,
+          "true_positive_rate": 0.951276102088167,
+          "false_positive_rate": 0.012302284710017574,
+          "n": 1000
+        }
+      },
+      "selection_rate_gap_percentage_points": -1.4,
+      "group_labels_are_real_demographics": false,
+      "invented_group_assumptions": "Same businesses with assumed 20% lower UPI/bank volume and 10% lower balance; not observed region data."
+    }
+  },
+  "limitations": [
+    "Inputs, groups, and generated labels are synthetic; metrics do not describe real demographic groups.",
+    "The generated target is an approval-rule label, not successful repayment; TPR/FPR here measure agreement with that synthetic rule only.",
+    "This script cannot establish equal opportunity, regulatory compliance, or model fairness in a lending population.",
+    "A production audit needs consented protected-group attributes, representative applicants, matured outcomes, and a documented governance process."
+  ]
+}
